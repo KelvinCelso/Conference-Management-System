@@ -106,7 +106,7 @@ const Papers = () => {
         <p>Loading...</p>
       ) : (
         <Table>
-          <TableCaption>A list of your recent submitted Papers.</TableCaption>
+          <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Conference ID</TableHead>

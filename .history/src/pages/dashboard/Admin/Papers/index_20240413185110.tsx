@@ -20,11 +20,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 
 const Papers = () => {
   const { loading, submittedPapers } = useGetSubmittedPapers();
@@ -106,7 +101,7 @@ const Papers = () => {
         <p>Loading...</p>
       ) : (
         <Table>
-          <TableCaption>A list of your recent submitted Papers.</TableCaption>
+          <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Conference ID</TableHead>
@@ -124,16 +119,9 @@ const Papers = () => {
                 <TableCell className="font-medium">{row.projectId}</TableCell>
                 <TableCell>{row.cAuthor}</TableCell>
                 <TableCell>
-                  <HoverCard>
-                    <HoverCardTrigger asChild>
-                      <Button variant="link">Authors</Button>
-                    </HoverCardTrigger>
-                    <HoverCardContent className="w-80">
-                      {row.authorNames.map((author: any) => {
-                        return <p>{author}</p>;
-                      })}
-                    </HoverCardContent>
-                  </HoverCard>
+                  {row.authors.map((author: any) => {
+                    return <p key={author}>{handleOverflowedText(author)}</p>;
+                  })}
                 </TableCell>
                 <TableCell>{row.abstract}</TableCell>
                 <TableCell>{row.fileId}</TableCell>
@@ -157,7 +145,7 @@ const Papers = () => {
                 </TableCell>
                 <TableCell>
                   <Button
-                    className="bg-green-500"
+                    className="bg-green-400"
                     onClick={() =>
                       handleSendForReview(row, assignedReviewers[idx])
                     }

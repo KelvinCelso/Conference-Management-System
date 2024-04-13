@@ -56,7 +56,7 @@ const MyConference = () => {
                   <TableCell>
                     {project.userAppliedProject.description}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="items-end">
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button className="bg-green-500">Submit Paper</Button>

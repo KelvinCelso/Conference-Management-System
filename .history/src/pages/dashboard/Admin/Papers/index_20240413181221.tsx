@@ -12,19 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 
 const Papers = () => {
   const { loading, submittedPapers } = useGetSubmittedPapers();
@@ -36,7 +23,7 @@ const Papers = () => {
   const { users } = useGetUsers(collectionName);
   const createPapersToBeReviewed = useCreatePapersToBeReviewed();
   const handleAssignedReviewerChange = (
-    e: React.ChangeEvent<HTMLSelectElement | any>,
+    e: React.ChangeEvent<HTMLSelectElement>,
     dataIndex: number
   ) => {
     const assignedReviewerId = e.target.value;
@@ -106,7 +93,7 @@ const Papers = () => {
         <p>Loading...</p>
       ) : (
         <Table>
-          <TableCaption>A list of your recent submitted Papers.</TableCaption>
+          <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Conference ID</TableHead>
@@ -122,48 +109,40 @@ const Papers = () => {
             {submittedPapers?.map((row, idx) => (
               <TableRow key={idx}>
                 <TableCell className="font-medium">{row.projectId}</TableCell>
-                <TableCell>{row.cAuthor}</TableCell>
+                <TableCell>{row.correspondingAuthor}</TableCell>
                 <TableCell>
-                  <HoverCard>
-                    <HoverCardTrigger asChild>
-                      <Button variant="link">Authors</Button>
-                    </HoverCardTrigger>
-                    <HoverCardContent className="w-80">
-                      {row.authorNames.map((author: any) => {
-                        return <p>{author}</p>;
-                      })}
-                    </HoverCardContent>
-                  </HoverCard>
+                  {row.authors.map((author: any) => {
+                    return <p key={author}>{handleOverflowedText(author)}</p>;
+                  })}
                 </TableCell>
                 <TableCell>{row.abstract}</TableCell>
-                <TableCell>{row.fileId}</TableCell>
+                <TableCell>{row.file?.name}</TableCell>
                 <TableCell>
-                  <Select>
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Reviewer" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {users.map((user: any) => (
-                        <SelectItem
-                          value={user.id}
-                          onChange={(e) => handleAssignedReviewerChange(e, idx)}
-                        >
-                          {" "}
-                          {`${user.firstName} ${user.lastName}`}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <select
+                    name="assignedReviewers"
+                    value={
+                      assignedReviewers[idx]?.[
+                        assignedReviewers[idx]?.length - 1
+                      ] || ""
+                    } // Set value to the last selected author ID or an empty string if no author is selected
+                    onChange={(e) => handleAssignedReviewerChange(e, idx)}
+                  >
+                    <option value="">Select...</option>
+                    {users.map((user: any) => (
+                      <option key={user.id} value={user.id}>
+                        {`${user.firstName} ${user.lastName}`}
+                      </option>
+                    ))}
+                  </select>
                 </TableCell>
                 <TableCell>
-                  <Button
-                    className="bg-green-500"
+                  <button
                     onClick={() =>
                       handleSendForReview(row, assignedReviewers[idx])
                     }
                   >
                     Send for review
-                  </Button>
+                  </button>
                 </TableCell>
               </TableRow>
             ))}

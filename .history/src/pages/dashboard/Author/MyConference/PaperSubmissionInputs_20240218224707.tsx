@@ -5,7 +5,6 @@ import { initialPaperSubmissionData } from "../../../../data/pages/dashboard/Aut
 import { PaperSubmissionInputsProps } from "../../../../types/dashboard/Author/props";
 import usePaperSubmission from "../../../../hooks/usePaperSubmission";
 import useGetUsers from "../../../../hooks/useGetUsers";
-import { Form } from "@/components/ui/form";
 
 const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
   projectId,

@@ -106,7 +106,7 @@ const Papers = () => {
         <p>Loading...</p>
       ) : (
         <Table>
-          <TableCaption>A list of your recent submitted Papers.</TableCaption>
+          <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Conference ID</TableHead>
@@ -126,7 +126,7 @@ const Papers = () => {
                 <TableCell>
                   <HoverCard>
                     <HoverCardTrigger asChild>
-                      <Button variant="link">Authors</Button>
+                      <Button variant="link">@nextjs</Button>
                     </HoverCardTrigger>
                     <HoverCardContent className="w-80">
                       {row.authorNames.map((author: any) => {
@@ -134,6 +134,7 @@ const Papers = () => {
                       })}
                     </HoverCardContent>
                   </HoverCard>
+                  ;
                 </TableCell>
                 <TableCell>{row.abstract}</TableCell>
                 <TableCell>{row.fileId}</TableCell>

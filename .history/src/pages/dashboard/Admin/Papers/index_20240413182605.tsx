@@ -19,12 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 
 const Papers = () => {
   const { loading, submittedPapers } = useGetSubmittedPapers();
@@ -106,7 +100,7 @@ const Papers = () => {
         <p>Loading...</p>
       ) : (
         <Table>
-          <TableCaption>A list of your recent submitted Papers.</TableCaption>
+          <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Conference ID</TableHead>
@@ -122,25 +116,18 @@ const Papers = () => {
             {submittedPapers?.map((row, idx) => (
               <TableRow key={idx}>
                 <TableCell className="font-medium">{row.projectId}</TableCell>
-                <TableCell>{row.cAuthor}</TableCell>
+                <TableCell>{row.correspondingAuthor}</TableCell>
                 <TableCell>
-                  <HoverCard>
-                    <HoverCardTrigger asChild>
-                      <Button variant="link">Authors</Button>
-                    </HoverCardTrigger>
-                    <HoverCardContent className="w-80">
-                      {row.authorNames.map((author: any) => {
-                        return <p>{author}</p>;
-                      })}
-                    </HoverCardContent>
-                  </HoverCard>
+                  {row.authors.map((author: any) => {
+                    return <p key={author}>{handleOverflowedText(author)}</p>;
+                  })}
                 </TableCell>
                 <TableCell>{row.abstract}</TableCell>
                 <TableCell>{row.fileId}</TableCell>
                 <TableCell>
                   <Select>
                     <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Reviewer" />
+                      <SelectValue placeholder="Theme" />
                     </SelectTrigger>
                     <SelectContent>
                       {users.map((user: any) => (
@@ -156,14 +143,13 @@ const Papers = () => {
                   </Select>
                 </TableCell>
                 <TableCell>
-                  <Button
-                    className="bg-green-500"
+                  <button
                     onClick={() =>
                       handleSendForReview(row, assignedReviewers[idx])
                     }
                   >
                     Send for review
-                  </Button>
+                  </button>
                 </TableCell>
               </TableRow>
             ))}

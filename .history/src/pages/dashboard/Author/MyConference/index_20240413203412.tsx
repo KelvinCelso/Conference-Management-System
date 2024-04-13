@@ -59,7 +59,7 @@ const MyConference = () => {
                   <TableCell>
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button className="bg-green-500">Submit Paper</Button>
+                        <Button>Apply</Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
