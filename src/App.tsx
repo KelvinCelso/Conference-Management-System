@@ -49,7 +49,7 @@ function App() {
     <>
       <ProjectsProvider>
         <GlobalStyle theme={theme} />
-        <StyledMain>
+        <div className="flex w-full bg-[#F1F5F9] ">
           <Routes>
             <Route path="/signup" element={<RegisterForm />} />
             <Route path="/signin" element={<LoginForm />} />
@@ -66,6 +66,7 @@ function App() {
                 path="/author-dashboard"
                 element={
                   <DashboardLayout>
+                    <AuthorNavbar />
                     <AuthorSidebar />
                   </DashboardLayout>
                 }
@@ -112,7 +113,7 @@ function App() {
               />
             </Route>
           </Routes>
-        </StyledMain>
+        </div>
       </ProjectsProvider>
     </>
   );
