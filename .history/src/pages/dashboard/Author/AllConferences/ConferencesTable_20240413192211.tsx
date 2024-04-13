@@ -41,7 +41,6 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { auth } from "@/firebase";
 
 const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
   const { updateProject, isUpdating, hasApplied } = useUpdateProject(); // Initializing the hook
@@ -79,7 +78,6 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
       ? date.toDate().toDateString()
       : "No Start Date";
   };
-
   return (
     <>
       <Table>

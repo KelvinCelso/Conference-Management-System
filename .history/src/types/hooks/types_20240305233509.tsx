@@ -13,8 +13,8 @@ export type ProjectStateType = {
 
 export type PaperSubmissionDataTypeWithIds = PaperSubmissionDataType & {
   id: string;
-  cAuthor: string;
 };
+
 
 export type SubmittedPapersStateType = {
   submittedPapers: PaperSubmissionDataTypeWithIds[];

@@ -21,7 +21,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import PaperSubmissionInputs from "./PaperSubmissionInputs";
 
 const MyConference = () => {
   const { userAppliedProjectsData, loading } = useUserAppliedProjects();
@@ -60,7 +59,7 @@ const MyConference = () => {
                   <TableCell>
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button className="bg-green-500">Submit Paper</Button>
+                        <Button>Apply</Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
@@ -70,7 +69,7 @@ const MyConference = () => {
                             you're done.
                           </DialogDescription>
                         </DialogHeader>
-                        <PaperSubmissionInputs projectId={project.projectId} />
+
                         <DialogFooter></DialogFooter>
                       </DialogContent>
                     </Dialog>

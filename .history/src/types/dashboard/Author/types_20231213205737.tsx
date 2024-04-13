@@ -21,10 +21,9 @@ export type AuthorSidebarLinksType = [
 ];
 
 export type PaperSubmissionDataType = {
-  authorNames: string[];
   abstract: string;
   file: File | null;
   authors: string[];
   correspondingAuthor: string;
-  projectId: string;
+  projectId: string
 };

@@ -21,42 +21,23 @@ const useGetSubmittedPapers = () => {
     const getProjects = async () => {
       try {
         const submittedPapersCollectionRef = collection(db, "paperSubmissions");
-        const querySnapshot = await getDocs(submittedPapersCollectionRef);
-        const submittedPapersDataWithIds = [];
-
-        // Iterate through each document
-        for (const doc of querySnapshot.docs) {
-          const submittedPaper = doc.data() as PaperSubmissionDataType;
+        const querySnapshot: QuerySnapshot = await getDocs(
+          submittedPapersCollectionRef
+        );
+        const submittedPapersDataWithIds: PaperSubmissionDataTypeWithIds[] = [];
+        querySnapshot.forEach(async (doc) => {
+          const submittedPaper: PaperSubmissionDataType =
+            doc.data() as PaperSubmissionDataType;
           const correspondingUserId = submittedPaper.correspondingAuthor;
-
-          // Get corresponding author details
-          const correspondingUserRef = dc(
-            db,
-            "authorUsers",
-            correspondingUserId
-          );
-          const correspondingUserSnap = await getDoc(correspondingUserRef);
-          const correspondingUser = correspondingUserSnap.data();
-
-          // Get names of all authors
-          const authorNames = await Promise.all(
-            submittedPaper.authors.map(async (authorId) => {
-              const authorDocRef = dc(db, "authorUsers", authorId);
-              const authorDocSnap = await getDoc(authorDocRef);
-              const authorData = authorDocSnap.data();
-              return `${authorData?.firstName} ${authorData?.lastName}`;
-            })
-          );
-
-          // Assign authorNames array to the submittedPaper object
-          submittedPaper.authorNames = authorNames;
+          const userRef = dc(db, "authorUsers", correspondingUserId);
+          const docSnap = await getDoc(userRef);
 
           submittedPapersDataWithIds.push({
             id: doc.id,
-            cAuthor: `${correspondingUser?.firstName} ${correspondingUser?.lastName}`,
+            cAuthor: `${docSnap.data()?.firstName + docSnap.data()?.lastName}`,
             ...submittedPaper,
           });
-        }
+        });
 
         setSubmittedPapersState({
           submittedPapers: submittedPapersDataWithIds,
@@ -72,8 +53,7 @@ const useGetSubmittedPapers = () => {
     };
 
     getProjects();
-  }, []);
-
+  }, []); // Empty dependency array ensures this runs only once on mount
   return submittedPapersState;
 };
 
