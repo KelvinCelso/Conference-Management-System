@@ -14,7 +14,7 @@ const AuthorNavbar = () => {
   return (
     <StyledAuthorNavbar>
       <div className="flex center space-x-5">
-        <button className="search-input-button">
+        <button className="author-navbar-button darkmode-button">
           <SearchIcon />
         </button>
         <input
