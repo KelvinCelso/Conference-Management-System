@@ -66,6 +66,7 @@ function App() {
                 path="/author-dashboard"
                 element={
                   <DashboardLayout>
+                    <AuthorNavbar />
                     <AuthorSidebar />
                   </DashboardLayout>
                 }
@@ -105,7 +106,10 @@ function App() {
                 index
                 element={<CreateConference />}
               />
-              <Route path="/admin-dashboard/papers" element={<Papers />} />
+              <Route
+                path="/admin-dashboard/papers"
+                element={<Papers />}
+              />
               <Route
                 path="/admin-dashboard/confirm-review"
                 element={<ConfirmReview />}

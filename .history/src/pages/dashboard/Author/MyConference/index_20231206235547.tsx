@@ -8,7 +8,6 @@ import useUserData from "../../../../hooks/useUserData";
 const MyConference = () => {
   const { userAppliedProjectsData, loading } = useUserAppliedProjects();
   const userDataElements = useUserData();
-  console.log(userDataElements);
   useEffect(() => {
     // Here, you can work with the userAppliedProjects array
     // console.log(userAppliedProjects);

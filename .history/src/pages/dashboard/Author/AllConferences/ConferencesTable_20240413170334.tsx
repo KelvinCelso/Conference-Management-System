@@ -30,17 +30,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 
 const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
   const { updateProject, isUpdating, hasApplied } = useUpdateProject(); // Initializing the hook
@@ -120,96 +109,49 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button
-                        variant="link"
-                        onClick={() => handleMoreInfoClick(row)}
-                      >
-                        More Info
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
-                      <DialogHeader>
-                        <DialogTitle>Edit profile</DialogTitle>
-                        <DialogDescription>
-                          Make changes to your profile here. Click save when
-                          you're done.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="name" className="text-right">
-                            Id
-                          </Label>
-                          <Input
-                            disabled
-                            value={row.id}
-                            className="col-span-3"
-                          />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="username" className="text-right">
-                            Conference Name
-                          </Label>
-                          <Input
-                            disabled
-                            value={row.title}
-                            className="col-span-3"
-                          />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="username" className="text-right">
-                            Topic
-                          </Label>
-                          <Input
-                            disabled
-                            value={row.topic}
-                            className="col-span-3"
-                          />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="username" className="text-right">
-                            Start Date
-                          </Label>
-                          <Input
-                            disabled
-                            value={dateToString(row.deadline.startDate)}
-                            className="col-span-3"
-                          />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="username" className="text-right">
-                            Start Date
-                          </Label>
-                          <Input
-                            disabled
-                            value={dateToString(row.deadline.endDate)}
-                            className="col-span-3"
-                          />
-                        </div>
-                      </div>
-                      <DialogFooter>
-                        <Button
-                          onClick={() => handleApply(row.id)}
-                          disabled={isUpdating || projectHasApplied}
-                          className="bg-green-500"
-                        >
-                          {isUpdating
-                            ? "Registering"
-                            : projectHasApplied
-                            ? "Registered"
-                            : "Register"}
-                        </Button>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
+                  <Button
+                    variant="link"
+                    onClick={() => handleMoreInfoClick(row)}
+                  >
+                    More Info
+                  </Button>
                 </TableCell>
               </TableRow>
             );
           })}
         </TableBody>
       </Table>
+      {isConferencePopupOpen && (
+        <>
+          <AlertDialog>
+            <AlertDialogTrigger>Open</AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction>Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+          <StyledConferencePopupContainer>
+            <Backdrop onClick={handleCloseConferencePopup} />
+            <ConferencePopup
+              project={selectedProject}
+              onClose={handleCloseConferencePopup}
+              handleApply={handleApply}
+              isUpdating={isUpdating}
+              hasApplied={hasApplied}
+            />
+          </StyledConferencePopupContainer>
+        </>
+      )}
     </>
   );
 };

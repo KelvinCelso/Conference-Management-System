@@ -8,7 +8,7 @@ const AllConferences = () => {
   const { projects, loading } = useGetProjects();
   const isProjectsEmpty = projects.length === 0;
   return (
-    <div className="flex w-full justify-center px-10 pt-20 ">
+    <div className="flex w-full justify-center p-10 ">
       {loading ? (
         <div>Loading...</div>
       ) : isProjectsEmpty ? (

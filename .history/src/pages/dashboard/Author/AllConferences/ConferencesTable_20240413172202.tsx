@@ -190,17 +190,7 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
                         </div>
                       </div>
                       <DialogFooter>
-                        <Button
-                          onClick={() => handleApply(row.id)}
-                          disabled={isUpdating || projectHasApplied}
-                          className="bg-green-500"
-                        >
-                          {isUpdating
-                            ? "Registering"
-                            : projectHasApplied
-                            ? "Registered"
-                            : "Register"}
-                        </Button>
+                        <Button type="submit">Save changes</Button>
                       </DialogFooter>
                     </DialogContent>
                   </Dialog>

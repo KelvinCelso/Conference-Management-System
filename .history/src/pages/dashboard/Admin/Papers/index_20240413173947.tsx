@@ -3,15 +3,6 @@ import useGetSubmittedPapers from "../../../../hooks/useGetPapersSubmissions";
 import { StyledPapers } from "../../../../styles/pages/dashboard/Admin/Papers/index.styled";
 import useGetUsers from "../../../../hooks/useGetUsers";
 import useCreatePapersToBeReviewed from "../../../../hooks/useCreatePapersToBeReviewed";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 const Papers = () => {
   const { loading, submittedPapers } = useGetSubmittedPapers();
@@ -92,64 +83,94 @@ const Papers = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Conference ID</TableHead>
-              <TableHead>Corresponding Author</TableHead>
-              <TableHead>Co-authors</TableHead>
-              <TableHead>Abstract</TableHead>
-              <TableHead>File</TableHead>
-              <TableHead>Assign Reviewer</TableHead>
-              <TableHead>Send for review</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {submittedPapers?.map((row, idx) => (
-              <TableRow key={idx}>
-                <TableCell className="font-medium">{row.projectId}</TableCell>
-                <TableCell>{row.correspondingAuthor}</TableCell>
-                <TableCell>
-                  {row.authors.map((author: any) => {
-                    return <p key={author}>{handleOverflowedText(author)}</p>;
-                  })}
-                </TableCell>
-                <TableCell>{row.abstract}</TableCell>
-                <TableCell>{row.file?.name}</TableCell>
-                <TableCell>
-                  <select
-                    name="assignedReviewers"
-                    value={
-                      assignedReviewers[idx]?.[
-                        assignedReviewers[idx]?.length - 1
-                      ] || ""
-                    } // Set value to the last selected author ID or an empty string if no author is selected
-                    onChange={(e) => handleAssignedReviewerChange(e, idx)}
-                  >
-                    <option value="">Select...</option>
-                    {users.map((user: any) => (
-                      <option key={user.id} value={user.id}>
-                        {`${user.firstName} ${user.lastName}`}
-                      </option>
-                    ))}
-                  </select>
-                </TableCell>
-                <TableCell>
-                  <button
-                    onClick={() =>
-                      handleSendForReview(row, assignedReviewers[idx])
-                    }
-                  >
-                    Send for review
-                  </button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <table>
+          <thead>
+            <tr>
+              <th>Conference ID</th>
+              <th>Corresponding Author</th>
+              <th>Co-authors</th>
+              <th>Abstract</th>
+              <th>File</th>
+              <th>Assign Reviewer</th>
+              <th>Send for review</th>
+            </tr>
+          </thead>
+          <tbody>
+            {submittedPapers?.map((row: any, dataIndex) => {
+              return (
+                <tr key={dataIndex}>
+                  <td title={row.projectId}>
+                    {handleOverflowedText(row.projectId)}
+                  </td>
+                  <td title={row.correspondingAuthor}>
+                    {handleOverflowedText(row.correspondingAuthor)}
+                  </td>
+                  <td className="co-authors" title={row.authors}>
+                    {row.authors.map((author: any) => {
+                      return <p key={author}>{handleOverflowedText(author)}</p>;
+                    })}
+                  </td>
+                  <td title={row.abstract}>
+                    {handleOverflowedText(row.abstract)}
+                  </td>
+                  <td>{row.fileId}</td>
+                  <td>
+                    <div>
+                      <label>Assign reviewer(s):</label>
+                      <select
+                        name="assignedReviewers"
+                        value={
+                          assignedReviewers[dataIndex]?.[
+                            assignedReviewers[dataIndex]?.length - 1
+                          ] || ""
+                        } // Set value to the last selected author ID or an empty string if no author is selected
+                        onChange={(e) =>
+                          handleAssignedReviewerChange(e, dataIndex)
+                        }
+                      >
+                        <option value="">Select...</option>
+                        {users.map((user: any) => (
+                          <option key={user.id} value={user.id}>
+                            {`${user.firstName} ${user.lastName}`}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="selectedUserNames">
+                      {assignedReviewerNames[dataIndex]?.map(
+                        (reviewerName, index) => (
+                          <div key={index}>
+                            {reviewerName}{" "}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                removeAssignedReviewer(index, dataIndex)
+                              }
+                            >
+                              x
+                            </button>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        handleSendForReview(row, assignedReviewers[dataIndex])
+                      }
+                    >
+                      Send for review
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       )}
     </>
   );
 };
+
 export default Papers;

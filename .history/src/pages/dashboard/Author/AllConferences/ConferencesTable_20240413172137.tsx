@@ -178,29 +178,9 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
                             className="col-span-3"
                           />
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="username" className="text-right">
-                            Start Date
-                          </Label>
-                          <Input
-                            disabled
-                            value={dateToString(row.deadline.endDate)}
-                            className="col-span-3"
-                          />
-                        </div>
                       </div>
                       <DialogFooter>
-                        <Button
-                          onClick={() => handleApply(row.id)}
-                          disabled={isUpdating || projectHasApplied}
-                          className="bg-green-500"
-                        >
-                          {isUpdating
-                            ? "Registering"
-                            : projectHasApplied
-                            ? "Registered"
-                            : "Register"}
-                        </Button>
+                        <Button type="submit">Save changes</Button>
                       </DialogFooter>
                     </DialogContent>
                   </Dialog>
