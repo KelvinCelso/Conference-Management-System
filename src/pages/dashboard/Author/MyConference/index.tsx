@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-
 import useUserAppliedProjects from "../../../../hooks/useUserAppliedProjects"; // Adjust the path
-
 import useUserData from "../../../../hooks/useUserData";
 import {
   Table,
@@ -33,7 +31,7 @@ const MyConference = () => {
     // Or perform any other operations with the fetched projects
   }, [userAppliedProjectsData]);
   return (
-    <div className="flex w-full justify-center px-10 py-20">
+    <div className="flex justify-center px-10 py-20">
       {loading ? (
         <p>Loading...</p>
       ) : (

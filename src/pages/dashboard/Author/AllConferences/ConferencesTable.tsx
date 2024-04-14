@@ -42,6 +42,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { auth } from "@/firebase";
+import useGetProjects from "@/hooks/useGetProjects";
 
 const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
   const { updateProject, isUpdating, hasApplied } = useUpdateProject(); // Initializing the hook
@@ -79,6 +80,7 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
       ? date.toDate().toDateString()
       : "No Start Date";
   };
+  const { loading } = useGetProjects();
 
   return (
     <>
@@ -86,13 +88,14 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
         <TableCaption>A list of your recent Conferences.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">ID</TableHead>
+            <TableHead>ID</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Topic</TableHead>
             <TableHead>Start Date</TableHead>
             <TableHead>Reg./Limit</TableHead>
             <TableHead>Register</TableHead>
             <TableHead>More Info</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
