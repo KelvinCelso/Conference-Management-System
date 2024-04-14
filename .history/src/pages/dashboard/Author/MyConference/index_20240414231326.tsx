@@ -65,20 +65,24 @@ const MyConference = () => {
                   </TableCell>
                   <TableCell>
                     <Dialog open={open} onOpenChange={setOpen}>
-                      <DialogTrigger asChild>
-                        <Button className="bg-green-500">Submit Paper</Button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                          <DialogTitle>Submit Paper</DialogTitle>
-                          <DialogDescription>
-                            Fill the form to submit your paper to this
-                            conference
-                          </DialogDescription>
-                        </DialogHeader>
-                        <PaperSubmissionInputs projectId={project.projectId} />
-                        <DialogFooter></DialogFooter>
-                      </DialogContent>
+                      <DialogOverlay className="bg-black/80">
+                        <DialogTrigger asChild>
+                          <Button className="bg-green-500">Submit Paper</Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px]">
+                          <DialogHeader>
+                            <DialogTitle>Edit profile</DialogTitle>
+                            <DialogDescription>
+                              Make changes to your profile here. Click save when
+                              you're done.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <PaperSubmissionInputs
+                            projectId={project.projectId}
+                          />
+                          <DialogFooter></DialogFooter>
+                        </DialogContent>
+                      </DialogOverlay>
                     </Dialog>
                   </TableCell>
                 </TableRow>

@@ -17,7 +17,6 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogOverlay,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -25,13 +24,11 @@ import { Button } from "@/components/ui/button";
 import PaperSubmissionInputs from "./PaperSubmissionInputs";
 import { useRecoilState } from "recoil";
 import { PaperDialog } from "@/lib/recoil";
-import { useToast } from "@/components/ui/use-toast";
 
 const MyConference = () => {
   const { userAppliedProjectsData, loading } = useUserAppliedProjects();
   const [open, setOpen] = useState(false);
   const userDataElements = useUserData();
-  const { toast } = useToast();
   console.log(userDataElements);
   useEffect(() => {
     // Here, you can work with the userAppliedProjects array
@@ -70,10 +67,10 @@ const MyConference = () => {
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                          <DialogTitle>Submit Paper</DialogTitle>
+                          <DialogTitle>Edit profile</DialogTitle>
                           <DialogDescription>
-                            Fill the form to submit your paper to this
-                            conference
+                            Make changes to your profile here. Click save when
+                            you're done.
                           </DialogDescription>
                         </DialogHeader>
                         <PaperSubmissionInputs projectId={project.projectId} />

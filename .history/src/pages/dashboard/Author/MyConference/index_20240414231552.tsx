@@ -64,16 +64,16 @@ const MyConference = () => {
                     {project.userAppliedProject.description}
                   </TableCell>
                   <TableCell>
-                    <Dialog open={open} onOpenChange={setOpen}>
+                    <Dialog>
                       <DialogTrigger asChild>
                         <Button className="bg-green-500">Submit Paper</Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                          <DialogTitle>Submit Paper</DialogTitle>
+                          <DialogTitle>Edit profile</DialogTitle>
                           <DialogDescription>
-                            Fill the form to submit your paper to this
-                            conference
+                            Make changes to your profile here. Click save when
+                            you're done.
                           </DialogDescription>
                         </DialogHeader>
                         <PaperSubmissionInputs projectId={project.projectId} />
