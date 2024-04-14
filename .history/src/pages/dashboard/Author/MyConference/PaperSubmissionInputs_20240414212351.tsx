@@ -38,12 +38,7 @@ import {
   ArrowDownCircle,
   ArrowDownFromLine,
   ChevronDown,
-  Loader2,
 } from "lucide-react";
-import { useRecoilState } from "recoil";
-import { PaperDialog } from "@/lib/recoil";
-import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 const formSchema = z.object({
   abstract: z.string().min(2, {
     message: "First Name must be at least 2 characters.",
@@ -56,7 +51,6 @@ const formSchema = z.object({
 const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
   projectId,
 }) => {
-  const [paperDialog, setPaperDialog] = useRecoilState(PaperDialog);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [paperSubmissionData, setPaperSubmissionData] =
     useState<PaperSubmissionDataType>(initialPaperSubmissionData);
@@ -68,7 +62,6 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
   });
   const collectionName = "authorUsers";
   const { users, loading } = useGetUsers(collectionName);
-  const { toast } = useToast();
 
   const handleAbstractChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -77,7 +70,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
       [name]: value,
     }));
   };
-  const closeDialog = () => setPaperDialog(false);
+
   const handleAuthorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedAuthorId = e.target.value;
     const selectedAuthor = users.find(
@@ -153,21 +146,12 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
       file: "",
     },
   });
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     setPaperSubmissionData((prev) => ({
       ...prev,
       correspondingAuthor: values.correspondingAuthor,
     }));
-    setPaperSubmissionData((prev) => ({
-      ...prev,
-      abstract: values.abstract,
-    }));
-    toast({
-      title: "Paper Submitted",
-      description:
-        "Your paper has been submitted, please wait for the response",
-    });
-    await submitPaper();
+    submitPaper();
   }
   const isOptionSelected = (value: string): boolean => {
     return selectedItems.includes(value) ? true : false;
@@ -196,11 +180,12 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
             name="abstract"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Abstract</FormLabel>
+                <FormLabel>First Name</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Type your abstract here...."
                     {...field}
+                    onChange={handleAbstractChange}
                   />
                 </FormControl>
                 <FormMessage />
@@ -212,7 +197,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
             name="coAuthor"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>CoAuthro(s)</FormLabel>
+                <FormLabel>Last Name</FormLabel>
                 <DropdownMenu>
                   <FormControl>
                     <DropdownMenuTrigger asChild className="w-full">
@@ -243,14 +228,13 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
               </FormItem>
             )}
           />
-          {selectedItems.map((item, idx) => {
+          {selectedItems.map((item) => {
             const user = users.find((user) => user.id === item);
             if (user)
               return (
                 <Input
                   className="w-full"
                   disabled
-                  key={idx}
                   value={`${user.firstName + " " + user.lastName}`}
                 />
               );
@@ -261,7 +245,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
             name="correspondingAuthor"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Corresponding Author</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -270,7 +254,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
                     <SelectTrigger>
                       <SelectValue
                         onChange={handleCorrespondingAuthor}
-                        placeholder="Select your corresponding author"
+                        placeholder="Select your capacity"
                         className="w-56"
                       />
                     </SelectTrigger>
@@ -304,13 +288,10 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
               <FormItem>
                 <FormControl>
                   <Input
+                    placeholder=""
                     type="file"
-                    accept=".pdf"
                     {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      handleFileChange(e);
-                    }}
+                    onChange={handleFileChange}
                   />
                 </FormControl>
                 <FormMessage />
@@ -318,19 +299,8 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
             )}
           />
 
-          <Button
-            className="w-full bg-green-500"
-            type="submit"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                <span>"Please wait"</span>
-              </>
-            ) : (
-              "submit"
-            )}
+          <Button className="w-full bg-green-500" type="submit">
+            Next
           </Button>
         </form>
       </Form>

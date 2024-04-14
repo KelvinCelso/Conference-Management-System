@@ -68,7 +68,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
   });
   const collectionName = "authorUsers";
   const { users, loading } = useGetUsers(collectionName);
-  const { toast } = useToast();
+  const { toast } = useToast()
 
   const handleAbstractChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -162,12 +162,12 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
       ...prev,
       abstract: values.abstract,
     }));
+    await submitPaper();
     toast({
       title: "Paper Submitted",
-      description:
-        "Your paper has been submitted, please wait for the response",
-    });
-    await submitPaper();
+      description: "Your paper has been submitted, please wait for the response",
+
+    
   }
   const isOptionSelected = (value: string): boolean => {
     return selectedItems.includes(value) ? true : false;
@@ -196,7 +196,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
             name="abstract"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Abstract</FormLabel>
+                <FormLabel>First Name</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Type your abstract here...."
@@ -212,7 +212,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
             name="coAuthor"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>CoAuthro(s)</FormLabel>
+                <FormLabel>Last Name</FormLabel>
                 <DropdownMenu>
                   <FormControl>
                     <DropdownMenuTrigger asChild className="w-full">
@@ -261,7 +261,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
             name="correspondingAuthor"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Corresponding Author</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -270,7 +270,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
                     <SelectTrigger>
                       <SelectValue
                         onChange={handleCorrespondingAuthor}
-                        placeholder="Select your corresponding author"
+                        placeholder="Select your capacity"
                         className="w-56"
                       />
                     </SelectTrigger>

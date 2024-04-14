@@ -196,7 +196,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
             name="abstract"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Abstract</FormLabel>
+                <FormLabel>First Name</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Type your abstract here...."
@@ -212,7 +212,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
             name="coAuthor"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>CoAuthro(s)</FormLabel>
+                <FormLabel>Last Name</FormLabel>
                 <DropdownMenu>
                   <FormControl>
                     <DropdownMenuTrigger asChild className="w-full">
@@ -261,7 +261,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
             name="correspondingAuthor"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Corresponding Author</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -270,7 +270,7 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
                     <SelectTrigger>
                       <SelectValue
                         onChange={handleCorrespondingAuthor}
-                        placeholder="Select your corresponding author"
+                        placeholder="Select your capacity"
                         className="w-56"
                       />
                     </SelectTrigger>
