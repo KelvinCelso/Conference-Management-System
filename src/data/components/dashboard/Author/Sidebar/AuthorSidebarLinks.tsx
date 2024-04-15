@@ -9,28 +9,22 @@ export const authorSidebarLinks: AuthorSidebarLinksType = [
     className: "author-sidebar__middle--main-links",
     links: [
       {
-        path: "/",
+        path: "",
         title: "My Conference",
-        image: <HomeIcon />,
+        image: <HomeIcon size={20} />,
         id: 0,
       },
       {
         path: "/all-conferences",
         title: "All Conferences",
-        image: <BookIcon />,
+        image: <BookIcon size={20} />,
         id: 1,
       },
       {
         path: "/reviewer-response",
         title: "Results",
-        image: <SearchIcon />,
+        image: <SearchIcon size={20} />,
         id: 2,
-      },
-      {
-        path: "/x",
-        title: "Ipsum Lorem",
-        image: <FontAwesomeIcon icon={faHouse} />,
-        id: 3,
       },
     ],
     id: 0,

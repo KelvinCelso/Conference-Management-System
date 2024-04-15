@@ -19,11 +19,9 @@ import { useEffect } from "react";
 import AuthorNavbar from "./components/dashboard/Author/Navbar";
 import AuthorSidebar from "./components/dashboard/Author/Sidebar";
 import AdminSidebar from "./components/dashboard/Admin/Sidebar";
-import CreateConference from "./pages/dashboard/Admin/CreateConference/index";
+import CreateConference from "./pages/dashboard/Admin/CreateConference";
 import ConfirmReview from "./pages/dashboard/Admin/ConfirmReview";
 import Papers from "./pages/dashboard/Admin/Papers";
-import ReviewerSidebar from "./components/dashboard/Reviewer/Sidebar";
-import { Toaster } from "./components/ui/toaster";
 
 const StyledMain = styled.main<{ theme: Theme }>`
   /* ${({ theme }) => theme.heights.footerHeight}; */
@@ -51,7 +49,7 @@ function App() {
     <>
       <ProjectsProvider>
         <GlobalStyle theme={theme} />
-        <div className="flex w-full ">
+        <div className="flex w-full bg-[#F1F5F9] ">
           <Routes>
             <Route path="/signup" element={<RegisterForm />} />
             <Route path="/signin" element={<LoginForm />} />
@@ -92,13 +90,7 @@ function App() {
             <Route
               path="/reviewer-dashboard"
               index
-              element={
-                <DashboardLayout>
-                  <AuthorNavbar />
-                  <ReviewerSidebar />
-                  <SubmittedConferences />
-                </DashboardLayout>
-              }
+              element={<SubmittedConferences />}
             ></Route>
             <Route
               path="/admin-dashboard"
@@ -122,7 +114,6 @@ function App() {
             </Route>
           </Routes>
         </div>
-        <Toaster />
       </ProjectsProvider>
     </>
   );

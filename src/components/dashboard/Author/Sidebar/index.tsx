@@ -6,29 +6,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { StyledAuthorSidebar } from "@/styles/components/dashboard/Author/Sidebar/index.styled";
 
 const AuthorSidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   return (
-    <aside
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-[300px] flex-col overflow-y-hidden bg-[#002E25] duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
-        sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
-    >
-      <div className="flex flex-col gap-2  py-5 lg:py-6">
-        <div className="w-32 px-6">
-          <Link to="/">
-            <img src={company_logo} alt="author" />
-          </Link>
+    <StyledAuthorSidebar>
+      <div className="flex flex-col gap-2  pb-5 lg:pb-6">
+        <div className="fixed bg-[#002e25] w-sidebar">
+          <div className="w-32 px-6 py-6">
+            <Link to="/">
+              <img src={company_logo} alt="author" />
+            </Link>
+          </div>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-[150px]">
           {authorSidebarLinks.map((linkBox) => {
             return (
               <div key={linkBox.id} className="mb-7">
                 {linkBox.heading && (
-                  <h4 className="text-[#829491]  text-lg px-6 mb-2">
+                  <h4 className="text-[#829491]  text-sm px-6 mb-2">
                     {linkBox.heading}
                   </h4>
                 )}
@@ -37,7 +36,7 @@ const AuthorSidebar = () => {
                     return (
                       <NavLink
                         key={link.id}
-                        className={`text-bodydark2 text-[#b4ceca] flex px-6  hover:bg-[#0D3930] py-4 ${
+                        className={`text-bodydark2 text-[#b4ceca] flex items-center px-6  hover:bg-[#0D3930] py-4 ${
                           location.pathname === `/author-dashboard${link.path}`
                             ? "bg-[#0D3930]"
                             : ""
@@ -48,7 +47,9 @@ const AuthorSidebar = () => {
                           {link.image}
                         </div>
 
-                        <span className="link-title text-lg">{link.title}</span>
+                        <span className="link-title text-base">
+                          {link.title}
+                        </span>
                       </NavLink>
                     );
                   })}
@@ -58,13 +59,13 @@ const AuthorSidebar = () => {
           })}
         </div>
       </div>
-      <div className="author-sidebar__bottom">
+      {/* <div className="author-sidebar__bottom">
         <Link className="auhtor-sidebar-link" to="">
           <FontAwesomeIcon icon={faPowerOff} />
           <span className="link-title">Log Out</span>
         </Link>
-      </div>
-    </aside>
+      </div> */}
+    </StyledAuthorSidebar>
   );
 };
 

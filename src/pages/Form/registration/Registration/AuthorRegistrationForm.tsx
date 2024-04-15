@@ -25,7 +25,7 @@ const AuthorRegistrationForm = () => {
   const [step, setStep] = useRecoilState(authorformStepState);
 
   return (
-    <div className="min-w-full space-y-5">
+    <div className=" space-y-5">
       {step === 1 && <FirstStepForm />}
       {step === 2 && <AuthorSecondStepForm />}
       <div className="flex flex-col items-center justify-center space-y-4">

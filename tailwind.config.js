@@ -57,6 +57,14 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+
+      margin: {
+        sidebar: 250,
+        navbar: "4rem",
+      },
+      width: {
+        sidebar: 250,
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

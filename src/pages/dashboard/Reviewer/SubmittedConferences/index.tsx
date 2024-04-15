@@ -8,6 +8,15 @@ import useGetToBeReviewed from "../../../../hooks/useGetToBeReviewed";
 import { StyledSubmittedConferences } from "../../../../styles/pages/dashboard/Reviewer/SubmittedConferences";
 import { StyledConferencePopupContainer } from "../../../../styles/pages/dashboard/Author/AllConferences/ConferencePopupContainer.styled";
 import Backdrop from "../../../../components/dashboard/mutual/Backdrop";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import SubmittedConferencesSkeleton from "@/components/Skeleton/SubmittedConferencesSkeleton";
 
 const SubmittedConferences = () => {
   // const { projects, loading } = useGetProjects();
@@ -35,24 +44,24 @@ const SubmittedConferences = () => {
     setIsPaperAssessmentFormOpen(true);
   };
   return (
-    <StyledSubmittedConferences>
+    <div className="mt-navbar py-1 ml-sidebar flex-1">
       {loading ? (
-        <div>Loading...</div>
+        <SubmittedConferencesSkeleton />
       ) : (
         <>
-          <table>
-            <thead>
-              <tr>
+          <Table>
+            <TableHeader>
+              <TableRow>
                 {/* <th>Paper</th> */}
-                <th>Corresponding Author</th>
-                <th>Co-authors</th>
-                <th>Project</th>
-                <th>File</th>
-                <th>Download File</th>
-                <th>Asses Paper</th>
-              </tr>
-            </thead>
-            <tbody>
+                <TableHead>Corresponding Author</TableHead>
+                <TableHead>Co-authors</TableHead>
+                <TableHead>Project</TableHead>
+                <TableHead>File</TableHead>
+                <TableHead>Download File</TableHead>
+                <TableHead>Asses Paper</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {toBeReviewed
                 .filter(({ assignedReviewers }) =>
                   (assignedReviewers as string[]).includes(authUser?.uid!)
@@ -105,8 +114,8 @@ const SubmittedConferences = () => {
               </td> */}
                   </tr>
                 ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
           {isPaperAssessmentFormOpen && (
             <StyledConferencePopupContainer>
               <Backdrop onClick={handleClosePaperAssesmentFormPopup} />
@@ -120,7 +129,7 @@ const SubmittedConferences = () => {
           )}
         </>
       )}
-    </StyledSubmittedConferences>
+    </div>
   );
 };
 

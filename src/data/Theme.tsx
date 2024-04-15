@@ -22,10 +22,10 @@ const theme = {
   dashboards: {
     author: {
       widths: {
-        sidebar: "300px",
+        sidebar: "250px",
       },
       heights: {
-        navbar: "4.25rem",
+        navbar: "4rem",
       },
       colors: {
         primaryBG: "#F8F9FA",

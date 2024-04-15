@@ -88,13 +88,13 @@ const AuthorSecondStepForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 w-full "
       >
-        <div className="space-y-2 w-full">
+        <div className="space-y-4 w-full">
           <div className="flex space-x-2">
             <FormField
               control={form.control}
               name="affiliation"
               render={({ field }) => (
-                <FormItem className="w-full">
+                <FormItem className="w-[188px]">
                   <FormLabel>Affiliation</FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -124,7 +124,7 @@ const AuthorSecondStepForm = () => {
               control={form.control}
               name="program"
               render={({ field }) => (
-                <FormItem className="w-full">
+                <FormItem className="w-[188px]">
                   <FormLabel>Program</FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -277,14 +277,14 @@ const AuthorSecondStepForm = () => {
             )}
           />
         </div>
-        <div className="flex space-x-2 ">
+        <div className="flex space-x-2">
           <Button
-            className="w-full bg-secondary mt-5 text-black hover:text-white"
+            className="w-full bg-secondary  text-black hover:text-white"
             onClick={() => setStep(1)}
           >
             Go Back
           </Button>
-          <Button className="w-full bg-green-500 mt-5" type="submit">
+          <Button className="w-full bg-green-500" type="submit">
             Next
           </Button>
         </div>

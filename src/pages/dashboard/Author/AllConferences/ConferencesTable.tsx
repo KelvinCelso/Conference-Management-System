@@ -42,6 +42,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { auth } from "@/firebase";
+import useGetProjects from "@/hooks/useGetProjects";
 
 const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
   const { updateProject, isUpdating, hasApplied } = useUpdateProject(); // Initializing the hook
@@ -86,13 +87,14 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
         <TableCaption>A list of your recent Conferences.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">ID</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead>Topic</TableHead>
-            <TableHead>Start Date</TableHead>
-            <TableHead>Reg./Limit</TableHead>
-            <TableHead>Register</TableHead>
-            <TableHead>More Info</TableHead>
+            <TableHead>ID</TableHead>
+            <TableHead className="w-40">Title</TableHead>
+            <TableHead className="w-40">Topic</TableHead>
+            <TableHead className="w-40">Start Date</TableHead>
+            <TableHead className="w-40">Reg./Limit</TableHead>
+            <TableHead className="w-40">Register</TableHead>
+            <TableHead className="w-40">More Info</TableHead>
+            <TableHead className="w-40"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -102,7 +104,7 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
             );
             return (
               <TableRow key={idx}>
-                <TableCell className="font-medium">{idx + 1}</TableCell>
+                <TableCell className="font-medium w-12">{idx + 1}</TableCell>
                 <TableCell>{row.title}</TableCell>
                 <TableCell>{row.topic}</TableCell>
                 <TableCell>{dateToString(row.deadline.startDate)}</TableCell>

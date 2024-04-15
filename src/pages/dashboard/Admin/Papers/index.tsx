@@ -25,6 +25,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import PapersSkeleton from "@/components/Skeleton/PapersSkeleton";
 
 const Papers = () => {
   const { loading, submittedPapers } = useGetSubmittedPapers();
@@ -101,15 +102,15 @@ const Papers = () => {
     }
   };
   return (
-    <div className="w-full py-20 px-10">
+    <div className="mt-navbar py-1 ml-sidebar flex-1">
       {loading ? (
-        <p>Loading...</p>
+        <PapersSkeleton />
       ) : (
         <Table>
           <TableCaption>A list of your recent submitted Papers.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Conference ID</TableHead>
+              <TableHead className="w-32">Conference ID</TableHead>
               <TableHead>Corresponding Author</TableHead>
               <TableHead>Co-authors</TableHead>
               <TableHead>Abstract</TableHead>

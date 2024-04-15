@@ -88,8 +88,8 @@ const FirstStepForm = () => {
   }, [step]);
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 ">
-        <div className="flex space-x-2">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
+        <div className="flex space-x-2 ">
           <FormField
             control={form.control}
             name="firstName"
@@ -171,6 +171,7 @@ const FirstStepForm = () => {
             </FormItem>
           )}
         />
+        <div className="w-1 h-2" />
         <Button className="w-full bg-green-500" type="submit">
           Next
         </Button>

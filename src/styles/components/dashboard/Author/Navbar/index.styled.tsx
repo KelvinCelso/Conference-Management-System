@@ -7,6 +7,7 @@ export const StyledAuthorNavbar = styled.nav<{ theme: Theme }>`
   position: fixed;
   left: 0;
   background-color: #fff;
+  z-index: 10;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   right: 0;
   top: 0;

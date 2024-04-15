@@ -5,8 +5,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ProjectDataType } from "../../../../types/dashboard/Admin/types";
 import { initialRegisterFormData } from "../../../../data/pages/Form/registration/InitialRegisterFormData";
 import useCreateProject from "../../../../hooks/useCreateProject";
-import { StyledCreateConference } from "../../../../styles/pages/dashboard/Admin/CreateConference/index.styled";
 import useGetUsers from "../../../../hooks/useGetUsers";
+import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
+
+const inputStyle =
+  "flex h-10 mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+
 const CreateConference = () => {
   const [projectData, setProjectData] =
     useState<ProjectDataType>(initialProjectData);
@@ -109,101 +116,118 @@ const CreateConference = () => {
   //     assignedReviewers: updatedAssignedReviewers,
   //   }));
   // };
+
+  const { toast } = useToast();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createProject(projectData, "projects");
     setProjectData(initialProjectData);
+    toast({
+      description: "Conference added successfully!",
+      duration: 1500,
+    });
   };
 
   return (
-    <StyledCreateConference>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title:</label>
-          <input
-            type="text"
-            name="title"
-            value={projectData.title}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Topic:</label>
-          <input
-            type="text"
-            name="topic"
-            value={projectData.topic}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Description:</label>
-          <textarea
-            name="description"
-            value={projectData.description}
-            onChange={handleChange}
-            required
-          ></textarea>
-        </div>
-        <div>
-          <label>Start Date:</label>
-          <DatePicker
-            selected={projectData.deadline.startDate}
-            onChange={(date: Date) => handleDateChange(date, "startDate")}
-            selectsStart
-            startDate={projectData.deadline.startDate}
-            endDate={projectData.deadline.endDate}
-            placeholderText="Select start date"
-            required
-            name="startDate"
-          />
-        </div>
-        <div>
-          <label>End Date:</label>
-          <DatePicker
-            selected={projectData.deadline.endDate}
-            onChange={(date: Date) => handleDateChange(date, "endDate")}
-            selectsEnd
-            startDate={projectData.deadline.startDate}
-            endDate={projectData.deadline.endDate}
-            minDate={projectData.deadline.startDate}
-            placeholderText="Select end date"
-            required
-            name="endDate"
-          />
-        </div>
-        <div>
-          {checkboxItems.options.map((inputValue, index) => {
-            return (
-              <div key={index}>
-                <label htmlFor="">{inputValue}</label>
-                <input
-                  value={inputValue}
-                  type="checkbox"
-                  name="canApply"
-                  checked={handleCheckboxChecked(inputValue)}
-                  id=""
-                  onChange={handleChange}
-                />
-              </div>
-            );
-          })}
-        </div>
-        <div>
-          <label htmlFor="">Student Capacity</label>
-          <input
-            type="number"
-            name="studentCapacity"
-            id=""
-            min={1}
-            max={10}
-            value={projectData.studentCapacity}
-            onChange={handleStudentCapatity}
-          />
-        </div>
-        {/* <div>
+    <div className="mt-20 ml-sidebar px-4 w-full">
+      <Card className="flex flex-col items-center mb-4">
+        <div className="mt-5" />
+        <CardContent className="space-y-2 w-full">
+          <form onSubmit={handleSubmit} className="space-y-4 w-full ">
+            <div>
+              <label className="text-sm">Title</label>
+              <input
+                type="text"
+                name="title"
+                value={projectData.title}
+                onChange={handleChange}
+                className={inputStyle}
+                required
+                placeholder="Insert the conference title"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm">Topic</label>
+              <input
+                type="text"
+                name="topic"
+                value={projectData.topic}
+                onChange={handleChange}
+                className={inputStyle}
+                required
+                placeholder="Insert the conference topic"
+              />
+            </div>
+            <div>
+              <label className="text-sm">Description</label>
+              <textarea
+                name="description"
+                value={projectData.description}
+                onChange={handleChange}
+                className={`${inputStyle} h-20`}
+                placeholder="Insert the conference description"
+                required
+              ></textarea>
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm">Start Date</label>
+              <DatePicker
+                selected={projectData.deadline.startDate}
+                onChange={(date: Date) => handleDateChange(date, "startDate")}
+                selectsStart
+                startDate={projectData.deadline.startDate}
+                endDate={projectData.deadline.endDate}
+                placeholderText="Select start date"
+                name="startDate"
+                className={inputStyle}
+                required
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm">End Date</label>
+              <DatePicker
+                selected={projectData.deadline.endDate}
+                onChange={(date: Date) => handleDateChange(date, "endDate")}
+                selectsEnd
+                startDate={projectData.deadline.startDate}
+                endDate={projectData.deadline.endDate}
+                minDate={projectData.deadline.startDate}
+                placeholderText="Select end date"
+                name="endDate"
+                className={inputStyle}
+                required
+              />
+            </div>
+            <div>
+              <label className="text-sm">Degree</label>
+              <RadioGroup className="flex" defaultValue="BSc">
+                {checkboxItems.options.map((inputValue, index) => {
+                  return (
+                    <div key={index} className="flex items-center space-x-2">
+                      <RadioGroupItem value={inputValue} id={inputValue} />
+                      <label htmlFor={inputValue}>{inputValue}</label>
+                    </div>
+                  );
+                })}
+              </RadioGroup>
+            </div>
+            <div>
+              <label className="text-sm">Student Capacity</label>
+              <input
+                type="number"
+                name="studentCapacity"
+                id=""
+                min={1}
+                max={10}
+                value={projectData.studentCapacity}
+                onChange={handleStudentCapatity}
+                required
+                className={inputStyle}
+              />
+            </div>
+            {/* <div>
           <label>Assign reviewer(s):</label>
           <select
             name="assignedReviewers"
@@ -231,9 +255,13 @@ const CreateConference = () => {
             </div>
           ))}
         </div> */}
-        <button type="submit">Create Project</button>
-      </form>
-    </StyledCreateConference>
+            <Button className="w-40 bg-green-500" type="submit">
+              Create project
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
