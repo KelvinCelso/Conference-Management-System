@@ -1,7 +1,4 @@
-import { RoleType } from "../../../data/pages/Form/registration/InitialRegisterFormData";
-
 import useGetUser from "../../../hooks/useGetUser";
-
 import {
   Card,
   CardContent,
@@ -11,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import LoginForm from "./LoginForm";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { getUser } = useGetUser();

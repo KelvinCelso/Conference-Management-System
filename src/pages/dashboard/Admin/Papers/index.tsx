@@ -101,7 +101,7 @@ const Papers = () => {
     }
   };
   return (
-    <div className="w-full py-20 px-10">
+    <div className="py-20">
       {loading ? (
         <p>Loading...</p>
       ) : (

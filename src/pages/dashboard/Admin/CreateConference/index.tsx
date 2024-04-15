@@ -5,8 +5,47 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ProjectDataType } from "../../../../types/dashboard/Admin/types";
 import { initialRegisterFormData } from "../../../../data/pages/Form/registration/InitialRegisterFormData";
 import useCreateProject from "../../../../hooks/useCreateProject";
-import { StyledCreateConference } from "../../../../styles/pages/dashboard/Admin/CreateConference/index.styled";
 import useGetUsers from "../../../../hooks/useGetUsers";
+import { Button } from "@/components/ui/button";
+import { Form, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+const formSchema = z.object({
+  description: z.string().email({
+    message: "Invalid email address",
+  }),
+  starDate: z.string().email({
+    message: "Invalid email address",
+  }),
+  endDate: z.string().email({
+    message: "Invalid email address",
+  }),
+  bsc: z.string().email({
+    message: "Invalid email address",
+  }),
+  msc: z.string().email({
+    message: "Invalid email address",
+  }),
+  phd: z.string().email({
+    message: "Invalid email address",
+  }),
+  other: z.string().email({
+    message: "Invalid email address",
+  }),
+  studentCapacity: z.string().min(8, {
+    message: "Password must be at least 8 characters",
+  }),
+});
+
 const CreateConference = () => {
   const [projectData, setProjectData] =
     useState<ProjectDataType>(initialProjectData);
@@ -109,15 +148,36 @@ const CreateConference = () => {
   //     assignedReviewers: updatedAssignedReviewers,
   //   }));
   // };
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    createProject(projectData, "projects");
-    setProjectData(initialProjectData);
-  };
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   createProject(projectData, "projects");
+  //   setProjectData(initialProjectData);
+  // };
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      description: "",
+      starDate: "",
+      endDate: "",
+      bsc: "",
+      msc: "",
+      phd: "",
+      other: "",
+      studentCapacity: "",
+    },
+  });
 
   return (
-    <StyledCreateConference>
-      <form onSubmit={handleSubmit}>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-2 w-full "
+      >
         <div>
           <label>Title:</label>
           <input
@@ -125,9 +185,21 @@ const CreateConference = () => {
             name="title"
             value={projectData.title}
             onChange={handleChange}
-            required
           />
         </div>
+        {/* <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>description</FormLabel>
+                <FormControl>
+                  <Input placeholder="" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}
         <div>
           <label>Topic:</label>
           <input
@@ -135,7 +207,6 @@ const CreateConference = () => {
             name="topic"
             value={projectData.topic}
             onChange={handleChange}
-            required
           />
         </div>
         <div>
@@ -144,7 +215,6 @@ const CreateConference = () => {
             name="description"
             value={projectData.description}
             onChange={handleChange}
-            required
           ></textarea>
         </div>
         <div>
@@ -156,7 +226,6 @@ const CreateConference = () => {
             startDate={projectData.deadline.startDate}
             endDate={projectData.deadline.endDate}
             placeholderText="Select start date"
-            required
             name="startDate"
           />
         </div>
@@ -170,7 +239,6 @@ const CreateConference = () => {
             endDate={projectData.deadline.endDate}
             minDate={projectData.deadline.startDate}
             placeholderText="Select end date"
-            required
             name="endDate"
           />
         </div>
@@ -231,9 +299,11 @@ const CreateConference = () => {
             </div>
           ))}
         </div> */}
-        <button type="submit">Create Project</button>
+        <Button className="w-full bg-green-500" type="submit">
+          Create project
+        </Button>
       </form>
-    </StyledCreateConference>
+    </Form>
   );
 };
 

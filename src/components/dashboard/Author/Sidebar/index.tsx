@@ -12,7 +12,7 @@ const AuthorSidebar = () => {
   const location = useLocation();
   return (
     <aside
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-[300px] flex-col overflow-y-hidden bg-[#002E25] duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 z-9999 flex h-screen w-[250px] flex-col overflow-y-hidden bg-[#002E25] duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -28,7 +28,7 @@ const AuthorSidebar = () => {
             return (
               <div key={linkBox.id} className="mb-7">
                 {linkBox.heading && (
-                  <h4 className="text-[#829491]  text-lg px-6 mb-2">
+                  <h4 className="text-[#829491]  text-sm px-6 mb-2">
                     {linkBox.heading}
                   </h4>
                 )}
@@ -37,7 +37,7 @@ const AuthorSidebar = () => {
                     return (
                       <NavLink
                         key={link.id}
-                        className={`text-bodydark2 text-[#b4ceca] flex px-6  hover:bg-[#0D3930] py-4 ${
+                        className={`text-bodydark2 text-[#b4ceca] flex items-center px-6  hover:bg-[#0D3930] py-4 ${
                           location.pathname === `/author-dashboard${link.path}`
                             ? "bg-[#0D3930]"
                             : ""
@@ -48,7 +48,9 @@ const AuthorSidebar = () => {
                           {link.image}
                         </div>
 
-                        <span className="link-title text-lg">{link.title}</span>
+                        <span className="link-title text-base">
+                          {link.title}
+                        </span>
                       </NavLink>
                     );
                   })}

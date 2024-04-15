@@ -80,7 +80,6 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
       ? date.toDate().toDateString()
       : "No Start Date";
   };
-  const { loading } = useGetProjects();
 
   return (
     <>
@@ -89,13 +88,13 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
         <TableHeader>
           <TableRow>
             <TableHead>ID</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead>Topic</TableHead>
-            <TableHead>Start Date</TableHead>
-            <TableHead>Reg./Limit</TableHead>
-            <TableHead>Register</TableHead>
-            <TableHead>More Info</TableHead>
-            <TableHead></TableHead>
+            <TableHead className="w-40">Title</TableHead>
+            <TableHead className="w-40">Topic</TableHead>
+            <TableHead className="w-40">Start Date</TableHead>
+            <TableHead className="w-40">Reg./Limit</TableHead>
+            <TableHead className="w-40">Register</TableHead>
+            <TableHead className="w-40">More Info</TableHead>
+            <TableHead className="w-40"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -105,7 +104,7 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
             );
             return (
               <TableRow key={idx}>
-                <TableCell className="font-medium">{idx + 1}</TableCell>
+                <TableCell className="font-medium w-12">{idx + 1}</TableCell>
                 <TableCell>{row.title}</TableCell>
                 <TableCell>{row.topic}</TableCell>
                 <TableCell>{dateToString(row.deadline.startDate)}</TableCell>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useUserAppliedProjects from "../../../../hooks/useUserAppliedProjects"; // Adjust the path
 import useUserData from "../../../../hooks/useUserData";
 import {
@@ -20,25 +20,23 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import PaperSubmissionInputs from "./PaperSubmissionInputs";
+import MyConferenceSkeleton from "@/components/Skeleton/MyConferenceSkeleton";
 
 const MyConference = () => {
   const { userAppliedProjectsData, loading } = useUserAppliedProjects();
   const userDataElements = useUserData();
   console.log(userDataElements);
-  useEffect(() => {
-    // Here, you can work with the userAppliedProjects array
-    // console.log(userAppliedProjects);
-    // Or perform any other operations with the fetched projects
-  }, [userAppliedProjectsData]);
+  useEffect(() => {}, [userAppliedProjectsData]);
+
   return (
-    <div className="flex justify-center px-10 py-20">
+    <div className="flex-1 justify-center py-20">
       {loading ? (
-        <p>Loading...</p>
+        <MyConferenceSkeleton />
       ) : (
-        <Table className="w-full">
+        <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">id</TableHead>
+              <TableHead>ID</TableHead>
               <TableHead>Conference Name</TableHead>
               <TableHead>Conference Topic</TableHead>
               <TableHead>Conference Description</TableHead>
@@ -49,13 +47,17 @@ const MyConference = () => {
             {userAppliedProjectsData.map((project, idx) => {
               return (
                 <TableRow key={idx}>
-                  <TableCell>{project.projectId}</TableCell>
-                  <TableCell>{project.userAppliedProject.title}</TableCell>
-                  <TableCell>{project.userAppliedProject.topic}</TableCell>
-                  <TableCell>
+                  <TableCell className="w-72">{project.projectId}</TableCell>
+                  <TableCell className="w-72">
+                    {project.userAppliedProject.title}
+                  </TableCell>
+                  <TableCell className="w-72">
+                    {project.userAppliedProject.topic}
+                  </TableCell>
+                  <TableCell className="w-72">
                     {project.userAppliedProject.description}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="w-72">
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button className="bg-green-500">Submit Paper</Button>
