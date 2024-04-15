@@ -76,14 +76,14 @@ const ReviewerSecondStepForm = () => {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-fit ">
-        <div className="space-y-2 w-fit">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <div className="space-y-4 w-fit">
           <div className="flex space-x-2 w-fit">
             <FormField
               control={form.control}
               name="affiliation"
               render={({ field }) => (
-                <FormItem className="w-full">
+                <FormItem className="w-[188px]">
                   <FormLabel>Affiliation</FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -113,7 +113,7 @@ const ReviewerSecondStepForm = () => {
               control={form.control}
               name="reviewCapacity"
               render={({ field }) => (
-                <FormItem className="w-72">
+                <FormItem className="w-[188px]">
                   <FormLabel className="">Review capacity</FormLabel>
                   <Select
                     onValueChange={field.onChange}

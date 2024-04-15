@@ -29,7 +29,7 @@ const MyConference = () => {
   useEffect(() => {}, [userAppliedProjectsData]);
 
   return (
-    <div className="flex-1 justify-center py-20">
+    <div className="mt-navbar py-1 ml-sidebar flex-1">
       {loading ? (
         <MyConferenceSkeleton />
       ) : (

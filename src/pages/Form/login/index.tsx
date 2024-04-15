@@ -8,7 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import LoginForm from "./LoginForm";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import company_logo from "../../../../src/assets/images/company-logo.webp";
 
 const Login = () => {
   const { getUser } = useGetUser();
@@ -18,7 +19,12 @@ const Login = () => {
   //   getUser(loginFormData.email, loginFormData.password, selectedRole);
   // };
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
+    <div className="flex flex-col h-screen w-screen items-center justify-center">
+      <div className="w-20 py-6">
+        <Link to="/">
+          <img src={company_logo} alt="author" />
+        </Link>
+      </div>
       <Card className="flex flex-col items-center">
         <CardHeader className="w-full flex flex-col items-center justify-center">
           <CardTitle>Login </CardTitle>

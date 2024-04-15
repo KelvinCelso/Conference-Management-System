@@ -1,16 +1,13 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import company_logo from "../../../../assets/images/company-logo.webp";
+import { StyledAuthorSidebar } from "@/styles/components/dashboard/Author/Sidebar/index.styled";
 
 const AdminSidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   return (
-    <aside
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-[250px] flex-col overflow-y-hidden bg-[#002E25] duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
-        sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
-    >
+    <StyledAuthorSidebar>
       <div className="flex flex-col gap-2  py-5 lg:py-6">
         <div className="w-32 px-6">
           <Link to="/">
@@ -60,7 +57,7 @@ const AdminSidebar = () => {
           </div>
         </div>
       </div>
-    </aside>
+    </StyledAuthorSidebar>
   );
 };
 

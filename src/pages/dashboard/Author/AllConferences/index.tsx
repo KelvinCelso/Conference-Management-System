@@ -7,7 +7,7 @@ const AllConferences = () => {
   const isProjectsEmpty = projects.length === 0;
 
   return (
-    <div className="flex-1 pt-20">
+    <div className="mt-navbar py-1 ml-sidebar flex-1">
       {loading ? (
         <TableSkeleton />
       ) : isProjectsEmpty ? (

@@ -1,10 +1,8 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 
 import useRegistrationForm from "../../../hooks/useRegistrationForm";
 import useRegisterFormData from "../../../hooks/useRegisterFormData";
 import { RoleType } from "../../../data/pages/Form/registration/InitialRegisterFormData";
-import { auth } from "../../../firebase";
-import useCreateUser from "../../../hooks/useCreateUser";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -15,11 +13,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
+import company_logo from "../../../../src/assets/images/company-logo.webp";
 import RegistrationForm from "./Registration/AuthorRegistrationForm";
 
 import ReviewerRegistrationForm from "./Registration/ReviewerRegistrationForm";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const RegisterForm = () => {
   const [selectedRole, setSelectedRole] = useState<RoleType>("author");
   const [showUserForm, setShowUserForm] = useState<boolean>(false);
@@ -34,14 +32,19 @@ const RegisterForm = () => {
   const { next, ...rest } = useRegistrationForm(registerFormSteps);
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
-      <Tabs defaultValue="account" className="w-[50%]">
+    <div className="flex flex-col w-full items-center justify-center py-16">
+      <div className="w-20 pb-6">
+        <Link to="/">
+          <img src={company_logo} alt="author" />
+        </Link>
+      </div>
+      <Tabs defaultValue="account">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Author</TabsTrigger>
           <TabsTrigger value="reviewer">Reviewer</TabsTrigger>
         </TabsList>
         <TabsContent value="account">
-          <Card className="flex flex-col items-center">
+          <Card className="flex flex-col items-center ">
             <CardHeader className="w-full flex flex-col items-center justify-center">
               <CardTitle>Author</CardTitle>
               <CardDescription>

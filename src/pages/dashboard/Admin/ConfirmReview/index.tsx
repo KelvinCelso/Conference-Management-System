@@ -11,6 +11,16 @@ import { StyledConferencePopupContainer } from "../../../../styles/pages/dashboa
 import Backdrop from "../../../../components/dashboard/mutual/Backdrop";
 import AssesmentView from "./AssesmentView";
 import useCreateFinalReviews from "../../../../hooks/useCreateFinalReviews";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import ConfirmReviewSkeleton from "@/components/Skeleton/ConfirmReviewSkeleton";
 
 const Papers = () => {
   const [isAssesmentViewOpen, setIsAssesmentViewOpen] =
@@ -55,26 +65,27 @@ const Papers = () => {
     }
   };
   return (
-    <StyledConfirmReview>
+    <div className="mt-navbar py-1 ml-sidebar flex-1">
       {loading ? (
-        <p>Loading...</p>
+        <ConfirmReviewSkeleton />
       ) : (
         <>
-          <table>
-            <thead>
-              <tr>
-                <th>Project ID</th>
-                <th>Corresponding Author</th>
-                <th>Co-authors</th>
-                <th>Assigned Reviewers</th>
-                <th>abstract</th>
-                <th>File</th>
-                <th>Download File</th>
-                <th>Final Assesment</th>
-                <th>Send</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table>
+            <TableCaption>A list of </TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-24">Project ID</TableHead>
+                <TableHead>Corresponding Author</TableHead>
+                <TableHead>Co-authors</TableHead>
+                <TableHead>Assigned Reviewers</TableHead>
+                <TableHead>Abstract</TableHead>
+                <TableHead>File</TableHead>
+                <TableHead>Download File</TableHead>
+                <TableHead>Final Assesment</TableHead>
+                <TableHead>Send</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {toBeReviewed?.map((row: any, dataIndex) => {
                 const paperReviewerIds = reviews
                   .filter((rev) => rev.paperId === row.paperId)
@@ -83,21 +94,24 @@ const Papers = () => {
                   (rev) => rev.paperId === row.paperId
                 );
                 return (
-                  <tr key={dataIndex}>
-                    <td title={row.projectId}>
+                  <TableRow key={dataIndex}>
+                    <TableCell title={row.projectId}>
                       {handleOverflowedText(row.projectId)}
-                    </td>
-                    <td title={row.correspondingAuthor}>
+                    </TableCell>
+                    <TableCell title={row.correspondingAuthor}>
                       {handleOverflowedText(row.correspondingAuthor)}
-                    </td>
-                    <td className="co-authors" title={row.authors}>
+                    </TableCell>
+                    <TableCell className="co-authors" title={row.authors}>
                       {row.authors.map((author: any) => {
                         return (
                           <p key={author}>{handleOverflowedText(author)}</p>
                         );
                       })}
-                    </td>
-                    <td className="co-authors" title={row.assignedReviewers}>
+                    </TableCell>
+                    <TableCell
+                      className="co-authors"
+                      title={row.assignedReviewers}
+                    >
                       {row.assignedReviewers.map((reviewer: any) => {
                         return (
                           <p key={reviewer}>
@@ -122,11 +136,11 @@ const Papers = () => {
                           </p>
                         );
                       })}
-                    </td>
-                    <td title={row.abstract}>
+                    </TableCell>
+                    <TableCell title={row.abstract}>
                       {handleOverflowedText(row.abstract)}
-                    </td>
-                    <td>{row.fileId}</td>
+                    </TableCell>
+                    <TableCell>{row.fileId}</TableCell>
                     {/* <td>
                     <div>
                       <label>Assign reviewer(s):</label>
@@ -167,7 +181,7 @@ const Papers = () => {
                       )}
                     </div>
                   </td> */}
-                    <td>
+                    <TableCell>
                       <button
                         onClick={() =>
                           handleDownload(row.correspondingAuthor, row.projectId)
@@ -178,8 +192,8 @@ const Papers = () => {
                       <a href={downloadUrl!} target="_blank">
                         d
                       </a>
-                    </td>
-                    <td>
+                    </TableCell>
+                    <TableCell>
                       <select
                         value={finalAssessments[row.paperId] || ""}
                         onChange={(e) =>
@@ -192,8 +206,8 @@ const Papers = () => {
                         <option value="Accept">Accept</option>
                         <option value="Strong Accept">Strong Accept</option>
                       </select>
-                    </td>
-                    <td>
+                    </TableCell>
+                    <TableCell>
                       <td>
                         <button
                           onClick={() => {
@@ -208,12 +222,12 @@ const Papers = () => {
                           Send
                         </button>
                       </td>
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 );
               })}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
           {isAssesmentViewOpen && (
             <>
               <StyledConferencePopupContainer>
@@ -227,7 +241,7 @@ const Papers = () => {
           )}
         </>
       )}
-    </StyledConfirmReview>
+    </div>
   );
 };
 

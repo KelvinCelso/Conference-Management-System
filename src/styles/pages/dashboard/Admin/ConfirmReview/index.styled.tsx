@@ -4,6 +4,7 @@ import { Theme } from "../../../../../types/default/types";
 export const StyledConfirmReview = styled.article<{ theme: Theme }>`
   flex: 1;
   margin-top: ${({ theme }) => theme.dashboards.author.heights.navbar};
+  margin-left: ${({ theme }) => theme.dashboards.author.widths.sidebar};
   background-color: antiquewhite;
   padding: 1rem;
   table {

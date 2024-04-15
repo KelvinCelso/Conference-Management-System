@@ -20,31 +20,36 @@ import {
   UserBaseInfoState,
   authorformStepState,
 } from "@/lib/recoil";
-const formSchema = z.object({
-  firstName: z.string().min(2, {
-    message: "First Name must be at least 2 characters.",
-  }),
-  lastName: z.string().min(2, {
-    message: "Last Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Invalid email address",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters",
-  }),
-  confirmPassword: z.string().min(8, {
-    message: "Password must be at least 8 characters",
-  }),
-  phone: z
-    .string()
-    .min(9, {
-      message: "Phone must be at least 9 characters",
-    })
-    .max(12, {
-      message: "Phone must be at most 12 characters",
+const formSchema = z
+  .object({
+    firstName: z.string().min(2, {
+      message: "First Name must be at least 2 characters.",
     }),
-});
+    lastName: z.string().min(2, {
+      message: "Last Name must be at least 2 characters.",
+    }),
+    email: z.string().email({
+      message: "Invalid email address",
+    }),
+    password: z.string().min(8, {
+      message: "Password must be at least 8 characters",
+    }),
+    confirmPassword: z.string().min(8, {
+      message: "Password must be at least 8 characters",
+    }),
+    phone: z
+      .string()
+      .min(9, {
+        message: "Phone must be at least 9 characters",
+      })
+      .max(12, {
+        message: "Phone must be at most 12 characters",
+      }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
 
 const FirstStepForm = () => {
   const [step, setStep] = useRecoilState(authorformStepState);
@@ -78,8 +83,8 @@ const FirstStepForm = () => {
   }, [step]);
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 ">
-        <div className="flex space-x-2">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
+        <div className="flex space-x-2 ">
           <FormField
             control={form.control}
             name="firstName"
@@ -161,6 +166,7 @@ const FirstStepForm = () => {
             </FormItem>
           )}
         />
+        <div className="w-1 h-2" />
         <Button className="w-full bg-green-500" type="submit">
           Next
         </Button>

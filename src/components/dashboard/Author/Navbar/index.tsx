@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { StyledAuthorNavbar } from "../../../../styles/components/dashboard/Author/Navbar/index.styled";
 import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { BellIcon, RefreshCwIcon, SearchIcon } from "lucide-react";
+import { BellIcon, LogOut, RefreshCwIcon, SearchIcon } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -17,9 +17,9 @@ const AuthorNavbar = () => {
 
   return (
     <StyledAuthorNavbar>
-      <div className="flex center space-x-5">
+      <div className="flex center space-x-5 ">
         <button className="author-navbar-button darkmode-button">
-          <SearchIcon />
+          <SearchIcon size={20} />
         </button>
         <input
           type="text"
@@ -52,9 +52,19 @@ const AuthorNavbar = () => {
               <p>Notifications</p>
             </TooltipContent>
           </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <div className="p-2 bg-gray-100 rounded-full">
+                <LogOut size={20} />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Log Out</p>
+            </TooltipContent>
+          </Tooltip>
         </TooltipProvider>
         <Link to="/">
-          <span className=" text-lg font-semibold">Ibadet Ismayilov</span>
+          <span className=" text-base font-semibold">Ibadet Ismayilov</span>
         </Link>
       </div>
     </StyledAuthorNavbar>
