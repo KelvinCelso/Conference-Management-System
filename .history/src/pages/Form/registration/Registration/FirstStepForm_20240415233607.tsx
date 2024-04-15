@@ -46,15 +46,14 @@ const formSchema = z
         message: "Phone must be at most 12 characters",
       }),
   })
-  .refine(
-    (values) => {
-      return values.password === values.confirmPassword;
-    },
-    {
-      message: "Passwords must match!",
-      path: ["confirmPassword"],
+  .superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "The passwords did not match",
+      });
     }
-  );
+  });
 
 const FirstStepForm = () => {
   const [step, setStep] = useRecoilState(authorformStepState);
