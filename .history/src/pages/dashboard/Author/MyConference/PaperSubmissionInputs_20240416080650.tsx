@@ -162,14 +162,14 @@ const PaperSubmissionInputs: React.FC<PaperSubmissionInputsProps> = ({
       ...prev,
       abstract: values.abstract,
     }));
-
-    await submitPaper();
-    setPaperDialog(false);
     toast({
       title: "Paper Submitted",
       description:
         "Your paper has been submitted, please wait for the response",
     });
+
+    await submitPaper();
+    setPaperDialog(false);
   }
   const isOptionSelected = (value: string): boolean => {
     return selectedItems.includes(value) ? true : false;
