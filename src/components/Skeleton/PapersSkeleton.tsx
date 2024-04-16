@@ -21,7 +21,7 @@ const PapersSkeleton = () => {
   };
 
   return (
-    <Table>
+    <Table className="max-md:w-[1000px] max-sm:w-[900px]">
       <TableHeader>
         <TableRow>
           <TableHead className="w-32">Conference ID</TableHead>

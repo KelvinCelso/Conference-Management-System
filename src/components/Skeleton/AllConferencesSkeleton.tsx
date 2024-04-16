@@ -23,36 +23,36 @@ const AllConferencesSkeleton = () => {
           <Skeleton className="h-4 bg-gray-400" />
         </TableCell>
         {cells}
-        <TableCell>
+        {/* <TableCell>
           <Skeleton className="h-10 w-[83px] bg-gray-400" />
         </TableCell>
         <TableCell>
           <Skeleton className="h-4 w-[70px] bg-gray-400" />
-        </TableCell>
+        </TableCell> */}
       </TableRow>
     );
   };
 
   return (
-    <Table>
+    <Table className="max-md:w-[1000px] max-sm:w-[900px]">
       <TableHeader>
         <TableRow>
           <TableHead>ID</TableHead>
-          <TableHead className="w-40">Title</TableHead>
-          <TableHead className="w-40">Topic</TableHead>
-          <TableHead className="w-40">Start Date</TableHead>
-          <TableHead className="w-40">Reg./Limit</TableHead>
-          <TableHead className="w-40">Register</TableHead>
-          <TableHead className="w-40">More Info</TableHead>
-          <TableHead className="w-40"></TableHead>
+          <TableHead>Title</TableHead>
+          <TableHead>Topic</TableHead>
+          <TableHead>Start Date</TableHead>
+          <TableHead>Reg./Limit</TableHead>
+          <TableHead>Register</TableHead>
+          <TableHead>More Info</TableHead>
+          <TableHead className="w-32"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        <SkeletonTableRow cellCount={5} />
-        <SkeletonTableRow cellCount={5} />
-        <SkeletonTableRow cellCount={5} />
-        <SkeletonTableRow cellCount={5} />
-        <SkeletonTableRow cellCount={5} />
+        <SkeletonTableRow cellCount={7} />
+        <SkeletonTableRow cellCount={7} />
+        <SkeletonTableRow cellCount={7} />
+        <SkeletonTableRow cellCount={7} />
+        <SkeletonTableRow cellCount={7} />
       </TableBody>
     </Table>
   );

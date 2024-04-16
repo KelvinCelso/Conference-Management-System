@@ -83,7 +83,7 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
 
   return (
     <>
-      <Table>
+      <Table className="max-md:w-[1000px] max-sm:w-[900px]">
         <TableCaption>A list of your recent Conferences.</TableCaption>
         <TableHeader>
           <TableRow>

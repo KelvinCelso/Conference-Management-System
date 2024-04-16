@@ -36,3 +36,8 @@ export const PaperDialog = atom({
   key: "PaperDialog",
   default: false,
 });
+
+export const MenuState = atom({
+  key: "menuState",
+  default: false,
+});

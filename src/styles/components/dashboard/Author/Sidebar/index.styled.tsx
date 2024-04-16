@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Theme } from "../../../../../types/default/types";
 
-export const StyledAuthorSidebar = styled.nav<{ theme: Theme }>`
+export const StyledAuthorSidebar = styled.nav<{ theme: Theme; opens: boolean }>`
   width: ${({ theme }) => theme.dashboards.author.widths.sidebar};
   height: 100%;
   overflow: hidden; /* Change this line */
@@ -10,9 +10,21 @@ export const StyledAuthorSidebar = styled.nav<{ theme: Theme }>`
   position: fixed;
   flex-direction: column;
   justify-content: space-between;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  z-index: 20;
+
   overflow-y: auto; /* Change this line */
   &::-webkit-scrollbar {
     width: 0; /* Hide the scrollbar */
+  }
+
+  @media screen and (max-width: 1024px) {
+    transform: translateX(
+      ${({ opens, theme }) =>
+        opens ? "0" : "-" + theme.dashboards.author.widths.sidebar}
+    );
   }
 
   .author-sidebar__top-wrapper {

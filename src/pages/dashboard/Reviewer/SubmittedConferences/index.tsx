@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useGetProjects from "../../../../hooks/useGetProjects";
 import useAuthentication from "../../../../hooks/useAuthentication";
 import useGetSubmittedPapers from "../../../../hooks/useGetPapersSubmissions";
@@ -17,6 +17,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import SubmittedConferencesSkeleton from "@/components/Skeleton/SubmittedConferencesSkeleton";
+import { MenuState } from "@/lib/recoil";
+import { useRecoilState } from "recoil";
 
 const SubmittedConferences = () => {
   // const { projects, loading } = useGetProjects();
@@ -25,6 +27,7 @@ const SubmittedConferences = () => {
   // const [selectedPaper, setSelectedPaper] = useState(null);
   const { submittedPapers } = useGetSubmittedPapers();
   const { toBeReviewed, loading } = useGetToBeReviewed();
+  const [opens, setOpens] = useRecoilState(MenuState);
   const authUser = useAuthentication();
   const { downloadLastPdf, downloadUrl, error } = useDownloadPDF();
   const [selectedPaper, setSelectedPaper] = useState(null); // State to track selected paper
@@ -43,13 +46,31 @@ const SubmittedConferences = () => {
     setSelectedPaper(paper);
     setIsPaperAssessmentFormOpen(true);
   };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1024) {
+        setOpens(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setOpens]);
+
   return (
-    <div className="mt-navbar py-1 ml-sidebar flex-1">
+    <div className="mt-navbar max-lg:mt-[50px] ml-sidebar max-lg:ml-0 flex-1 overflow-auto">
+      {opens && (
+        <div
+          className="absolute top-0 right-0 bg-black/10 left-0 bottom-0 z-10"
+          onClick={() => setOpens(false)}
+        />
+      )}
       {loading ? (
         <SubmittedConferencesSkeleton />
       ) : (
         <>
-          <Table>
+          <Table className="max-md:w-[1000px] max-sm:w-[900px]">
             <TableHeader>
               <TableRow>
                 {/* <th>Paper</th> */}

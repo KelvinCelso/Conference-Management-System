@@ -16,6 +16,18 @@ export const StyledAuthorNavbar = styled.nav<{ theme: Theme }>`
   align-items: center;
   justify-content: space-between;
   overflow-x: auto;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  @media screen and (max-width: 1024px) {
+    margin-left: 0;
+    height: 50px;
+    justify-content: space-between;
+  }
+  @media screen and (max-width: 400px) {
+    padding: 0 6px;
+  }
+
   .author-navbar__left {
     display: flex;
     align-items: center;

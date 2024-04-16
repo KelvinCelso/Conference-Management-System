@@ -2,26 +2,44 @@ import { Link, NavLink } from "react-router-dom";
 
 import company_logo from "../../../../assets/images/company-logo.webp";
 import { authorSidebarLinks } from "../../../../data/components/dashboard/Author/Sidebar/AuthorSidebarLinks";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { StyledAuthorSidebar } from "@/styles/components/dashboard/Author/Sidebar/index.styled";
+import { useRecoilState } from "recoil";
+import { MenuState } from "@/lib/recoil";
+import { ChevronLeft, StepBackIcon } from "lucide-react";
+import { useEffect } from "react";
 
 const AuthorSidebar = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [opens, setOpens] = useRecoilState(MenuState);
   const location = useLocation();
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1024) {
+        setOpens(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setOpens]);
+
   return (
-    <StyledAuthorSidebar>
+    <StyledAuthorSidebar opens={opens}>
       <div className="flex flex-col gap-2  pb-5 lg:pb-6">
-        <div className="fixed bg-[#002e25] w-sidebar">
+        <div className="fixed bg-[#002e25] w-sidebar flex justify-between ">
           <div className="w-32 px-6 py-6">
             <Link to="/">
               <img src={company_logo} alt="author" />
             </Link>
           </div>
+          <button
+            className="h-10 w-10 bg-[#0D3930] rounded-lg lg:hidden mt-6 mr-6 flex items-center justify-center"
+            onClick={() => setOpens(false)}
+          >
+            <ChevronLeft size={20} color="white" />
+          </button>
         </div>
-
         <div className="mt-[150px]">
           {authorSidebarLinks.map((linkBox) => {
             return (
@@ -42,6 +60,7 @@ const AuthorSidebar = () => {
                             : ""
                         }`}
                         to={`/author-dashboard${link.path} `}
+                        onClick={() => setOpens(false)}
                       >
                         <div className="link-img-wrapper w-10">
                           {link.image}
@@ -59,10 +78,11 @@ const AuthorSidebar = () => {
           })}
         </div>
       </div>
-      {/* <div className="author-sidebar__bottom">
-        <Link className="auhtor-sidebar-link" to="">
-          <FontAwesomeIcon icon={faPowerOff} />
-          <span className="link-title">Log Out</span>
+      {/* <div className="  ">
+        <Link to="/" className="sm:hidden">
+          <span className=" text-base font-semibold text-white text-[#b4ceca]">
+            Ibadet Ismayilov
+          </span>
         </Link>
       </div> */}
     </StyledAuthorSidebar>
