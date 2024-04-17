@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { initialRegisterFormData } from "@/data/pages/Form/registration/InitialRegisterFormData";
-import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -41,7 +41,6 @@ import {
 import { cn } from "@/lib/utils";
 import { auth } from "@/firebase";
 import useCreateUser from "@/hooks/useCreateUser";
-import { useState } from "react";
 
 const formSchema = z.object({
   affiliation: z.string({
@@ -57,7 +56,6 @@ const formSchema = z.object({
 const ReviewerSecondStepForm = () => {
   const [step, setStep] = useRecoilState(authorformStepState);
   const [user, setUser] = useRecoilState(UserBaseInfoState);
-  const [loading, setLoading] = useState(false);
   const { createUser } = useCreateUser("reviewer");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,16 +66,13 @@ const ReviewerSecondStepForm = () => {
     },
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setLoading(true);
     const newUser = {
       ...user,
       affiliation: values.affiliation,
       academicInterest: values.academicInterest,
       reviewCapacity: values.reviewCapacity,
     };
-
     await createUser(auth, newUser);
-    setLoading(false);
   }
   return (
     <Form {...form}>
@@ -223,19 +218,8 @@ const ReviewerSecondStepForm = () => {
           >
             Go Back
           </Button>
-          <Button
-            className="w-full bg-green-500"
-            type="submit"
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                <span>"Please wait"</span>
-              </>
-            ) : (
-              "Complete"
-            )}
+          <Button className="w-full bg-green-500 mt-5" type="submit">
+            Complete
           </Button>
         </div>
       </form>

@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { initialRegisterFormData } from "@/data/pages/Form/registration/InitialRegisterFormData";
-import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -39,8 +39,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { auth } from "@/firebase";
 import useCreateUser from "@/hooks/useCreateUser";
+import { auth } from "@/firebase";
 import { useState } from "react";
 
 const formSchema = z.object({
@@ -50,21 +50,26 @@ const formSchema = z.object({
   academicInterest: z.string({
     required_error: "Please introduce your Academic Interest",
   }),
-  reviewCapacity: z.string({
-    required_error: "Please introduce your review capacity",
+  program: z.string({
+    required_error: "Please introduce your program",
+  }),
+  supervisor: z.string({
+    required_error: "Please introduce your Supervisor",
   }),
 });
-const ReviewerSecondStepForm = () => {
+
+const AuthorSecondStepForm = () => {
   const [step, setStep] = useRecoilState(authorformStepState);
+  const { createUser } = useCreateUser("author");
   const [user, setUser] = useRecoilState(UserBaseInfoState);
   const [loading, setLoading] = useState(false);
-  const { createUser } = useCreateUser("reviewer");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       affiliation: "",
-      reviewCapacity: "",
+      program: "",
       academicInterest: "",
+      supervisor: "",
     },
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -72,18 +77,21 @@ const ReviewerSecondStepForm = () => {
     const newUser = {
       ...user,
       affiliation: values.affiliation,
+      program: values.program,
       academicInterest: values.academicInterest,
-      reviewCapacity: values.reviewCapacity,
+      supervisor: values.supervisor,
     };
-
     await createUser(auth, newUser);
     setLoading(false);
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <div className="space-y-4 w-fit">
-          <div className="flex space-x-2 w-fit">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 w-full "
+      >
+        <div className="space-y-4 w-full">
+          <div className="flex space-x-2">
             <FormField
               control={form.control}
               name="affiliation"
@@ -100,7 +108,7 @@ const ReviewerSecondStepForm = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {initialRegisterFormData.reviewer.affiliation.options.map(
+                      {initialRegisterFormData.author.affiliation.options.map(
                         (value) => (
                           <SelectItem key={value} value={value}>
                             {value}
@@ -116,30 +124,23 @@ const ReviewerSecondStepForm = () => {
             />
             <FormField
               control={form.control}
-              name="reviewCapacity"
+              name="program"
               render={({ field }) => (
                 <FormItem className="w-[188px]">
-                  <FormLabel className="">Review capacity</FormLabel>
+                  <FormLabel>Program</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue
-                          placeholder="Select your capacity"
-                          className="w-56"
-                        />
+                        <SelectValue placeholder="Select your program" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="w-56">
-                      {initialRegisterFormData.reviewer.reviewCapacity.options.map(
+                    <SelectContent>
+                      {initialRegisterFormData.author.program.options.map(
                         (value) => (
-                          <SelectItem
-                            key={value}
-                            value={String(value)}
-                            className="w-56"
-                          >
+                          <SelectItem key={value} value={value}>
                             {value}
                           </SelectItem>
                         )
@@ -153,6 +154,68 @@ const ReviewerSecondStepForm = () => {
             />
           </div>
 
+          <FormField
+            control={form.control}
+            name="supervisor"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Supervisor</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "w-full justify-between",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value
+                          ? initialRegisterFormData.author.supervisor.options.find(
+                              (value) => value === field.value
+                            )
+                          : "Your supervisor"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[200px] p-0">
+                    <Command>
+                      <CommandInput placeholder="Search supervisor...." />
+                      <CommandEmpty>No language found.</CommandEmpty>
+
+                      <CommandList>
+                        {initialRegisterFormData.author.supervisor.options.map(
+                          (value) => (
+                            <CommandItem
+                              value={value}
+                              key={value}
+                              onSelect={() => {
+                                form.setValue("supervisor", value);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  value === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {value}
+                            </CommandItem>
+                          )
+                        )}
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="academicInterest"
@@ -171,7 +234,7 @@ const ReviewerSecondStepForm = () => {
                         )}
                       >
                         {field.value
-                          ? initialRegisterFormData.reviewer.academicInterest.options.find(
+                          ? initialRegisterFormData.author.academicInterest.options.find(
                               (value) => value === field.value
                             )
                           : "Your Academic Interest"}
@@ -216,9 +279,9 @@ const ReviewerSecondStepForm = () => {
             )}
           />
         </div>
-        <div className="flex space-x-2 ">
+        <div className="flex space-x-2">
           <Button
-            className="w-full bg-secondary mt-5 text-black hover:text-white"
+            className="w-full bg-secondary  text-black hover:text-white"
             onClick={() => setStep(1)}
           >
             Go Back
@@ -243,4 +306,4 @@ const ReviewerSecondStepForm = () => {
   );
 };
 
-export default ReviewerSecondStepForm;
+export default AuthorSecondStepForm;

@@ -46,9 +46,7 @@ import useGetProjects from "@/hooks/useGetProjects";
 
 const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
   const { updateProject, isUpdating, hasApplied } = useUpdateProject();
-  const [justApplied, setJustApplied] = useState<{
-    [projectId: string]: boolean;
-  }>({});
+  const [justApplied, setJustApplied] = useState(false);
   const [updateStates, setUpdateStates] = useState<{
     [projectId: string]: boolean;
   }>({});
@@ -59,7 +57,7 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
       setUpdateStates({ ...updateStates, [id]: true });
       await updateProject(id);
       setUpdateStates({ ...updateStates, [id]: false });
-      setJustApplied({ ...justApplied, [id]: true });
+      setJustApplied(true);
     } catch (error) {
       console.error("Error applying to project:", error);
     }
@@ -125,13 +123,13 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
                     disabled={
                       updateStates[row.id] ||
                       projectHasApplied ||
-                      justApplied[row.id]
+                      updateStates[row.id]
                     }
                     className="bg-green-500"
                   >
                     {updateStates[row.id]
                       ? "Registering"
-                      : projectHasApplied || justApplied[row.id]
+                      : projectHasApplied || justApplied
                       ? "Registered"
                       : "Register"}
                   </Button>
@@ -209,15 +207,13 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
                         <Button
                           onClick={() => handleApply(row.id)}
                           disabled={
-                            isUpdating ||
-                            projectHasApplied ||
-                            justApplied[row.id]
+                            isUpdating || projectHasApplied || justApplied
                           }
                           className="bg-green-500"
                         >
                           {isUpdating
                             ? "Registering"
-                            : projectHasApplied || justApplied[row.id]
+                            : projectHasApplied || justApplied
                             ? "Registered"
                             : "Register"}
                         </Button>

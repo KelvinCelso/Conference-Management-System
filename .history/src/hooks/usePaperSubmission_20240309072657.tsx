@@ -16,15 +16,15 @@ interface PaperSubmissionHookProps {
   projectId: string; // Assuming projectId is a string
 }
 
-const usePaperSubmission = () => {
+const usePaperSubmission = ({
+  paperSubmissionData,
+  projectId,
+}: PaperSubmissionHookProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const authUser = useAuthentication();
   const storage = getStorage(); // Initialize Firebase Storage
-  const submitPaper = async ({
-    paperSubmissionData,
-    projectId,
-  }: PaperSubmissionHookProps) => {
+  const submitPaper = async () => {
     setIsSubmitting(true);
     try {
       if (authUser && authUser.uid) {

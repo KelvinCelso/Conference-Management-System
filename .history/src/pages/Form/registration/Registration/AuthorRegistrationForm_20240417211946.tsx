@@ -27,7 +27,7 @@ const AuthorRegistrationForm = () => {
   return (
     <div className=" space-y-5">
       {step === 1 && <FirstStepForm />}
-      {step === 2 && <AuthorSecondStepForm />}
+      {step === 2 && <AuthorSecondStepForm />}{" "}
     </div>
   );
 };

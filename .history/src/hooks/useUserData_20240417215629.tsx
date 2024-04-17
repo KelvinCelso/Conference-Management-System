@@ -51,10 +51,10 @@ const useUserData = (): UserDataProps => {
           return setUserData(userDataFromSnapshot);
         }
         const reviewerUserDocRef = doc(db, "reviewerUsers", authUid);
-        const reviewerSnapshot = await getDoc(reviewerUserDocRef);
-        if (reviewerSnapshot.exists()) {
+        const revviewerSnapshot = await getDoc(reviewerUserDocRef);
+        if (revviewerSnapshot.exists()) {
           const userDataFromSnapshot =
-            reviewerSnapshot.data() as AuthorUserDataType;
+            revviewerSnapshot.data() as AuthorUserDataType;
           setUserDataLoading(false);
           return setUserData(userDataFromSnapshot);
         }

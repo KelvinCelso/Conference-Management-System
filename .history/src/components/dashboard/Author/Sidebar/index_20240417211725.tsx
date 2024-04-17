@@ -66,7 +66,9 @@ const AuthorSidebar = () => {
                           {link.image}
                         </div>
 
-                        <span className="link-title text-sm">{link.title}</span>
+                        <span className="link-title text-base">
+                          {link.title}
+                        </span>
                       </NavLink>
                     );
                   })}

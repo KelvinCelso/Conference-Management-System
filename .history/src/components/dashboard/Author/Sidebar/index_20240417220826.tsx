@@ -34,7 +34,7 @@ const AuthorSidebar = () => {
             </Link>
           </div>
           <button
-            className="h-10 w-10 bg-[#0D3930] rounded-lg lg:hidden mt-6 mr-6 flex items-center justify-center"
+            className="h-10 w-10 bg-pink-400 rounded-lg lg:hidden mt-6 mr-6 flex items-center justify-center"
             onClick={() => setOpens(false)}
           >
             <ChevronLeft size={20} color="white" />

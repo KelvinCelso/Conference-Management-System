@@ -9,7 +9,7 @@ interface IUserData {
   role: "author" | "admin" | "reviewer";
 }
 
-const useUserData = (): UserDataProps => {
+const useUserData = ({ role }: IUserData): UserDataProps => {
   const [userData, setUserData] = useState<AuthorUserDataType>(
     {} as AuthorUserDataType
   );
@@ -31,33 +31,16 @@ const useUserData = (): UserDataProps => {
 
         setUserId(authUid); // Set userId here
 
-        const authorUserDocRef = doc(db, "authorUsers", authUid);
+        const authorUserDocRef = doc(db, `${role}Users`, authUid);
         const authorUserSnapshot = await getDoc(authorUserDocRef);
 
         if (authorUserSnapshot.exists()) {
           const userDataFromSnapshot =
             authorUserSnapshot.data() as AuthorUserDataType;
-          setUserDataLoading(false);
-          return setUserData(userDataFromSnapshot);
+          setUserData(userDataFromSnapshot);
         }
 
-        const adminUserDocRef = doc(db, "adminUsers", authUid);
-        const adminUserSnapshot = await getDoc(adminUserDocRef);
-
-        if (adminUserSnapshot.exists()) {
-          const userDataFromSnapshot =
-            adminUserSnapshot.data() as AuthorUserDataType;
-          setUserDataLoading(false);
-          return setUserData(userDataFromSnapshot);
-        }
-        const reviewerUserDocRef = doc(db, "reviewerUsers", authUid);
-        const reviewerSnapshot = await getDoc(reviewerUserDocRef);
-        if (reviewerSnapshot.exists()) {
-          const userDataFromSnapshot =
-            reviewerSnapshot.data() as AuthorUserDataType;
-          setUserDataLoading(false);
-          return setUserData(userDataFromSnapshot);
-        }
+        setUserDataLoading(false);
       } catch (error) {
         setUserDataLoading(false);
         console.error("Error fetching user data:", error);

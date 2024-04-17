@@ -32,16 +32,25 @@ const AuthorNavbar = () => {
   const pathname = window.location.pathname;
   console.log(pathname);
   const [opens, setOpens] = useRecoilState(MenuState);
-  const { userData } = useUserData();
+  // const { userData } = useUserData(dashboardRole[pathname]);
   return (
     <StyledAuthorNavbar>
       <div className="flex center">
         <button
-          className="p-2 bg-gray-blue rounded-full lg:hidden mr-3 max-sm:mr-2"
+          className="p-2 bg-gray-100 rounded-full lg:hidden mr-3 max-sm:mr-2"
           onClick={() => setOpens(!opens)}
         >
           <MenuIcon className="w-5 h-5 max-lg:w-4 max-lg:h-4" />
         </button>
+        <button className="author-navbar-button darkmode-button mr-3 max-sm:mr-2">
+          <SearchIcon className="w-5 h-5 max-lg:w-4 max-lg:h-4" />
+        </button>
+        <input
+          type="text"
+          placeholder="Type to search"
+          id="author-navbar-search-input"
+          className="max-lg:text-sm w-28"
+        />
       </div>
       <div className="flex items-center space-x-3 max-sm:space-x-2  transition-all">
         <TooltipProvider>
@@ -78,14 +87,23 @@ const AuthorNavbar = () => {
               <p>Log Out</p>
             </TooltipContent>
           </Tooltip>
+          <Tooltip>
+            <TooltipTrigger className="sm:hidden">
+              <Link
+                to="/"
+                className=" w-[33px] h-[33px] flex items-center justify-center bg-gray-100 rounded-full"
+              >
+                <span className="text-base font-semibold -mt-[2px]">I</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Ibadet Ismayilov</p>
+            </TooltipContent>
+          </Tooltip>
         </TooltipProvider>
-        {userData.firstName && (
-          <Link to="/" className="max-sm:hidden">
-            <p className=" text-base font-semibold">{`${
-              userData.firstName + " " + userData.lastName
-            }`}</p>
-          </Link>
-        )}
+        <Link to="/" className="max-sm:hidden">
+          <span className=" text-base font-semibold">Ibadet Ismayilov</span>
+        </Link>
       </div>
     </StyledAuthorNavbar>
   );

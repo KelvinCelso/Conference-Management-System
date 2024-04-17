@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ConferencesTableProps } from "../../../../types/dashboard/Author/props";
 import { StyledConferencesTable } from "../../../../styles/pages/dashboard/Author/AllConferences/ConferencesTable.styled";
 import { Timestamp } from "firebase/firestore";
@@ -45,26 +45,17 @@ import { auth } from "@/firebase";
 import useGetProjects from "@/hooks/useGetProjects";
 
 const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
-  const { updateProject, isUpdating, hasApplied } = useUpdateProject();
-  const [justApplied, setJustApplied] = useState<{
-    [projectId: string]: boolean;
-  }>({});
-  const [updateStates, setUpdateStates] = useState<{
-    [projectId: string]: boolean;
-  }>({});
+  const { updateProject, isUpdating, hasApplied } = useUpdateProject(); // Initializing the hook
   const authUser = useAuthentication();
   const handleApply = async (id: string) => {
     // Assuming you want to update the project when the Apply button is clicked
     try {
-      setUpdateStates({ ...updateStates, [id]: true });
+      // Logic to update project with userData
       await updateProject(id);
-      setUpdateStates({ ...updateStates, [id]: false });
-      setJustApplied({ ...justApplied, [id]: true });
     } catch (error) {
       console.error("Error applying to project:", error);
     }
   };
-
   const [selectedProject, setSelectedProject] =
     useState<ProjectDataTypeWithIds | null>(null);
   const [isConferencePopupOpen, setIsConferencePopupOpen] =
@@ -122,16 +113,12 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
                 <TableCell>
                   <Button
                     onClick={() => handleApply(row.id)}
-                    disabled={
-                      updateStates[row.id] ||
-                      projectHasApplied ||
-                      justApplied[row.id]
-                    }
+                    disabled={isUpdating || projectHasApplied}
                     className="bg-green-500"
                   >
-                    {updateStates[row.id]
+                    {isUpdating
                       ? "Registering"
-                      : projectHasApplied || justApplied[row.id]
+                      : projectHasApplied
                       ? "Registered"
                       : "Register"}
                   </Button>
@@ -148,9 +135,10 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                       <DialogHeader>
-                        <DialogTitle>More details</DialogTitle>
+                        <DialogTitle>Edit profile</DialogTitle>
                         <DialogDescription>
-                          Conference Details
+                          Make changes to your profile here. Click save when
+                          you're done.
                         </DialogDescription>
                       </DialogHeader>
                       <div className="grid gap-4 py-4">
@@ -208,16 +196,12 @@ const ConferencesTable: React.FC<ConferencesTableProps> = ({ projects }) => {
                       <DialogFooter>
                         <Button
                           onClick={() => handleApply(row.id)}
-                          disabled={
-                            isUpdating ||
-                            projectHasApplied ||
-                            justApplied[row.id]
-                          }
+                          disabled={isUpdating || projectHasApplied}
                           className="bg-green-500"
                         >
                           {isUpdating
                             ? "Registering"
-                            : projectHasApplied || justApplied[row.id]
+                            : projectHasApplied
                             ? "Registered"
                             : "Register"}
                         </Button>

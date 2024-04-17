@@ -37,7 +37,7 @@ const AuthorNavbar = () => {
     <StyledAuthorNavbar>
       <div className="flex center">
         <button
-          className="p-2 bg-gray-blue rounded-full lg:hidden mr-3 max-sm:mr-2"
+          className="p-2 bg-gray-100 rounded-full lg:hidden mr-3 max-sm:mr-2"
           onClick={() => setOpens(!opens)}
         >
           <MenuIcon className="w-5 h-5 max-lg:w-4 max-lg:h-4" />
@@ -79,13 +79,13 @@ const AuthorNavbar = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        {userData.firstName && (
-          <Link to="/" className="max-sm:hidden">
+        <Link to="/" className="max-sm:hidden">
+          {userData && (
             <p className=" text-base font-semibold">{`${
               userData.firstName + " " + userData.lastName
             }`}</p>
-          </Link>
-        )}
+          )}
+        </Link>
       </div>
     </StyledAuthorNavbar>
   );
