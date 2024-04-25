@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useGetUser from "@/hooks/useGetUser";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -64,7 +65,7 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} type="password" />
+                <PasswordInput placeholder="" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

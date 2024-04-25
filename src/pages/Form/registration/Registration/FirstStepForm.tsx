@@ -20,6 +20,7 @@ import {
   UserBaseInfoState,
   authorformStepState,
 } from "@/lib/recoil";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 const formSchema = z
   .object({
     firstName: z.string().min(2, {
@@ -152,7 +153,7 @@ const FirstStepForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} type="password" />
+                <PasswordInput placeholder="" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -165,7 +166,7 @@ const FirstStepForm = () => {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} type="password" />
+                <PasswordInput placeholder="" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
